@@ -30,6 +30,12 @@ const wishlist = {
             app.showToast("Added to wishlist ❤️", "success");
         }
         this.save();
+        
+        // Trigger animation
+        document.querySelectorAll(`.wishlist-btn[data-id="${id}"]`).forEach(btn => {
+            btn.classList.add('pop');
+            setTimeout(() => btn.classList.remove('pop'), 300);
+        });
     },
 
     isFavorite(productId) {
