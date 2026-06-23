@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "order_id": "ORD-92813",
+    "product_id": 1,
+    "size": "Standard",
+    "quantity": 1,
+    "price": 2249.1
+  },
+  {
+    "id": 2,
+    "order_id": "ORD-92813",
+    "product_id": 3,
+    "size": "2.5 Litre",
+    "quantity": 1,
+    "price": 1279.2
+  },
+  {
+    "id": 3,
+    "order_id": "ORD-92813",
+    "product_id": 7,
+    "size": "Set of 5",
+    "quantity": 1,
+    "price": 349
+  },
+  {
+    "id": 4,
+    "order_id": "ORD-48291",
+    "product_id": 2,
+    "size": "1.5 Litre Jug",
+    "quantity": 1,
+    "price": 1104.15
+  },
+  {
+    "id": 5,
+    "order_id": "ORD-75783",
+    "product_id": 3,
+    "size": "2.5 Litre",
+    "quantity": 2,
+    "price": 1279.2
+  },
+  {
+    "id": 6,
+    "order_id": "ORD-76084",
+    "product_id": 3,
+    "size": "2.5 Litre",
+    "quantity": 1,
+    "price": 1279.2
+  },
+  {
+    "id": 7,
+    "order_id": "ORD-25323",
+    "product_id": 3,
+    "size": "2.5 Litre",
+    "quantity": 1,
+    "price": 1279.2
+  },
+  {
+    "id": 8,
+    "order_id": "ORD-56717",
+    "product_id": 1,
+    "size": "Standard",
+    "quantity": 1,
+    "price": 2249.1
+  }
+]
