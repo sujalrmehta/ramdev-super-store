@@ -2694,5 +2694,471 @@ header {
     display: none !important; /* Hide old title headers */
 }
 
+/* ==========================================================================
+   PAN-INDIA UPGRADES & AESTHETIC ENHANCEMENTS
+   ========================================================================== */
+
+/* 1. Language Selector in Header */
+.lang-selector-container {
+    position: relative;
+    margin-right: 15px;
+}
+.lang-select {
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-card);
+    color: var(--text-dark);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    outline: none;
+}
+.lang-select:hover {
+    border-color: var(--accent-gold);
+}
+
+/* 2. Hero Carousel Banner */
+.hero-carousel {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-medium);
+    margin-bottom: 30px;
+    background: #000;
+}
+.carousel-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.carousel-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    display: flex;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+.carousel-item.active {
+    opacity: 1;
+    z-index: 2;
+}
+.carousel-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(18, 15, 14, 0.85) 0%, rgba(18, 15, 14, 0.4) 100%);
+    z-index: 2;
+}
+.carousel-caption {
+    position: relative;
+    z-index: 3;
+    max-width: 600px;
+    padding: 40px 60px;
+    color: #ffffff;
+}
+.carousel-caption h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 15px;
+    color: var(--accent-gold) !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+.carousel-caption p {
+    font-size: 16px;
+    margin-bottom: 25px;
+    color: #e0e0e0;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+.carousel-btn {
+    display: inline-block;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, var(--accent-copper) 0%, #b22a00 100%);
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 30px;
+    font-size: 14px;
+    box-shadow: 0 4px 15px rgba(216, 67, 21, 0.4);
+    transition: var(--transition-smooth);
+}
+.carousel-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(216, 67, 21, 0.6);
+}
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: var(--transition-fast);
+}
+.carousel-control:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: #ffffff;
+}
+.carousel-control.prev { left: 20px; }
+.carousel-control.next { right: 20px; }
+.carousel-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+.carousel-dot.active {
+    background: var(--accent-gold);
+    transform: scale(1.2);
+}
+
+/* 3. Pincode Estimator & Health Guide inside Product Card */
+.product-card-meta-upgrades {
+    border-top: 1px dashed var(--border-color);
+    margin-top: 12px;
+    padding-top: 12px;
+}
+.pincode-checker-container {
+    margin-bottom: 10px;
+}
+.pincode-input-group {
+    display: flex;
+    gap: 6px;
+}
+.pincode-input {
+    flex: 1;
+    padding: 6px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 12px;
+    outline: none;
+}
+.pincode-btn {
+    padding: 6px 12px;
+    background-color: var(--primary-light);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 500;
+}
+.pincode-btn:hover {
+    background-color: var(--primary-bronze);
+}
+.pincode-feedback {
+    font-size: 11px;
+    margin-top: 4px;
+    font-weight: 500;
+}
+.health-benefits-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background-color: rgba(46, 125, 50, 0.1);
+    color: var(--accent-green);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+.health-benefits-badge:hover {
+    background-color: rgba(46, 125, 50, 0.2);
+}
+
+/* 4. State-Wise Craft Highlight Section */
+.state-craft-section {
+    margin: 50px 0;
+}
+.section-title-center {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.section-title-center h2 {
+    font-size: 28px;
+    color: var(--primary-bronze);
+}
+.section-title-center p {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 5px;
+}
+.craft-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+.craft-card {
+    background-color: var(--bg-card);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border-color);
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+}
+.craft-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+    border-color: var(--accent-gold);
+}
+.craft-icon {
+    font-size: 28px;
+    color: var(--accent-copper);
+    margin-bottom: 12px;
+}
+.craft-card h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: var(--primary-bronze);
+}
+.craft-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+.craft-state-tag {
+    align-self: flex-start;
+    margin-top: auto;
+    padding: 3px 8px;
+    background-color: var(--border-color);
+    color: var(--primary-light);
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* 5. UPI Simulated QR Payment Modal */
+.upi-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.upi-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.upi-modal {
+    background-color: var(--bg-card);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+    padding: 30px;
+    box-shadow: var(--shadow-medium);
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+.upi-modal-overlay.active .upi-modal {
+    transform: scale(1);
+}
+.upi-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+.upi-header h3 {
+    font-size: 18px;
+    color: var(--primary-bronze);
+}
+.upi-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+.upi-qr-image-container {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 20px;
+    border: 2px solid var(--accent-gold);
+    padding: 10px;
+    border-radius: 12px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.upi-qr-image-container img {
+    max-width: 100%;
+    max-height: 100%;
+}
+.upi-amount-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: var(--border-color);
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--primary-bronze);
+    margin-bottom: 15px;
+}
+.upi-instructions {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+.upi-btn-simulate {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--accent-green) 0%, #1b5e20 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+    transition: var(--transition-fast);
+}
+.upi-btn-simulate:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(46, 125, 50, 0.5);
+}
+
+/* 6. Floating WhatsApp Button */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: #25d366;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 30px;
+    z-index: 99;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+.whatsapp-float:hover {
+    transform: scale(1.1) rotate(10deg);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+}
+
+/* 7. Health Benefits Information Dialog/Modal */
+.health-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.health-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.health-modal {
+    background-color: var(--bg-card);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 450px;
+    padding: 30px;
+    box-shadow: var(--shadow-medium);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+.health-modal-overlay.active .health-modal {
+    transform: scale(1);
+}
+.health-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+.health-header h3 {
+    font-size: 18px;
+    color: var(--accent-green);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.health-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+.health-body {
+    font-size: 14px;
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+.health-body ul {
+    margin-top: 10px;
+    padding-left: 20px;
+}
+.health-body li {
+    margin-bottom: 8px;
+}
+
 
 
