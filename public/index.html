@@ -23,6 +23,7 @@
             <div class="search-bar-container">
                 <i class="fa-solid fa-magnifying-glass search-glass-icon"></i>
                 <input type="text" id="search-input" placeholder="Search premium products..." autocomplete="off">
+                <button class="voice-search-btn" id="voice-search-btn" onclick="app.startVoiceSearch()" title="Search by voice"><i class="fa-solid fa-microphone"></i></button>
                 <!-- Search auto-suggestions dropdown -->
                 <div class="search-suggestions-box" id="search-suggestions"></div>
             </div>
@@ -640,6 +641,18 @@
     <a href="https://wa.me/919999999999?text=Hello%20Ramdev%20Store,%20I%20have%20an%20inquiry%20about%20your%20products." class="whatsapp-float" target="_blank" title="Chat on WhatsApp">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
+
+    <!-- VOICE SEARCH LISTENING MODAL -->
+    <div class="voice-modal-overlay" id="voice-modal-overlay">
+        <div class="voice-modal">
+            <div class="voice-pulse-circle">
+                <i class="fa-solid fa-microphone"></i>
+            </div>
+            <h3 id="voice-status-text">Listening...</h3>
+            <p id="voice-instructions-text">Speak now (English or हिन्दी)</p>
+            <button class="btn btn-secondary" onclick="app.stopVoiceSearch()" style="margin-top: 15px; padding: 6px 16px;">Cancel</button>
+        </div>
+    </div>
 
     <!-- Client Script Modules -->
     <script src="/js/api.js"></script>
