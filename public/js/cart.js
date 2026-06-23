@@ -87,6 +87,9 @@ const cart = {
         this.save();
         this.render();
         app.showToast(`Added "${product.name}" (${size}) to basket.`, "success");
+        if (app.toggleCartDrawer) {
+            app.toggleCartDrawer(true);
+        }
     },
 
     updateQty(productId, size, change) {
@@ -179,6 +182,23 @@ const cart = {
         const total = this.getTotal();
         document.getElementById('cart-subtotal-val').innerText = subtotal.toFixed(2);
         document.getElementById('cart-total-val').innerText = total.toFixed(2);
+
+        // Update Free Shipping Progress
+        const shippingTarget = 2000;
+        const progressFill = document.getElementById('shipping-progress-fill');
+        const progressText = document.getElementById('shipping-progress-text');
+        
+        if (progressFill && progressText) {
+            if (subtotal >= shippingTarget) {
+                progressFill.style.width = '100%';
+                progressText.innerHTML = `<strong>Congratulations!</strong> You get FREE Shipping!`;
+            } else {
+                const percentage = (subtotal / shippingTarget) * 100;
+                const remaining = shippingTarget - subtotal;
+                progressFill.style.width = `${percentage}%`;
+                progressText.innerHTML = `Add <span>₹${remaining.toFixed(2)}</span> more for <strong>FREE Shipping!</strong>`;
+            }
+        }
     },
 
     renderCheckoutSummary() {
