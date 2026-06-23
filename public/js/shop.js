@@ -303,7 +303,21 @@ const shop = {
                         
                         <!-- Amazon Prime Delivery Tag -->
                         <div class="prime-delivery-tag">
-                            <i class="fa-solid fa-truck-fast"></i> FREE Delivery Tomorrow
+                            <i class="fa-solid fa-truck-fast"></i> FREE Delivery
+                        </div>
+                        
+                        <!-- Pan-India Upgrades -->
+                        <div class="product-card-meta-upgrades">
+                            <div class="pincode-checker-container">
+                                <div class="pincode-input-group">
+                                    <input type="text" class="pincode-input" id="pincode-input-${product.id}" placeholder="Enter Pincode" maxlength="6">
+                                    <button class="pincode-btn" onclick="app.checkPincode(${product.id})">Check</button>
+                                </div>
+                                <div class="pincode-feedback" id="pincode-feedback-${product.id}"></div>
+                            </div>
+                            <span class="health-benefits-badge" onclick="app.openHealthModal('${product.material}')">
+                                <i class="fa-solid fa-heart-pulse"></i> Health Benefits
+                            </span>
                         </div>
                     </div>
                 </div>
