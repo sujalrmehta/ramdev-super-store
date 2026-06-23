@@ -1,50 +1,18 @@
 [
   {
     "id": 1,
-    "name": "Ramdev Store Admin",
-    "email": "admin@ramdev.com",
-    "password": "admin123",
+    "name": "Rakesh Kumar",
+    "email": "rakeshcmehta2107@gmail.com",
+    "password": "0f2fb39aa45fb1e1e778fc70a3ee74e4:6f8ff9e9ad37422cf830978ce4b81076841cab33c408ce2f1abff8ffd5d162b3f81117b873ba75e218d0289018ce86866c1f5f0f5ad27ee0bba6b916c508c257",
     "role": "admin",
-    "created_at": "2026-05-12T05:23:21.644Z"
+    "created_at": "2026-05-24T07:30:31.197Z"
   },
   {
     "id": 2,
     "name": "Rahul Kumar",
     "email": "customer@ramdev.com",
-    "password": "pass123",
+    "password": "e92b2a02e3913d2d97a8a7556389bc6b:1db8ce163604de97e38111107b877c1795a82d97ca116e87caad52f1e6c9b559b3b9fbd10ece8abb358096ef13eec5405e436253913cdecc609a4406e3ad9617",
     "role": "customer",
-    "created_at": "2026-05-27T05:23:21.644Z"
-  },
-  {
-    "id": 3,
-    "name": "Test Customer",
-    "email": "tester@ramdev.com",
-    "password": "testpassword",
-    "role": "customer",
-    "created_at": "2026-06-11T05:23:21.660Z"
-  },
-  {
-    "id": 4,
-    "name": "Regular Customer",
-    "email": "regular@ramdev.com",
-    "password": "pass12345password",
-    "role": "customer",
-    "created_at": "2026-06-11T05:36:41.568Z"
-  },
-  {
-    "id": 5,
-    "name": "Regular Customer",
-    "email": "regular@ramdev.com",
-    "password": "pass12345password",
-    "role": "customer",
-    "created_at": "2026-06-11T06:46:18.468Z"
-  },
-  {
-    "id": 6,
-    "name": "Sujal",
-    "email": "sujalrmehta2003@gmail.com",
-    "password": "123456",
-    "role": "customer",
-    "created_at": "2026-06-11T06:48:08.414Z"
+    "created_at": "2026-06-08T07:30:31.197Z"
   }
 ]
