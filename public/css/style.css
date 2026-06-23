@@ -3160,5 +3160,116 @@ header {
     margin-bottom: 8px;
 }
 
+/* 8. Voice Search Styling & Animations */
+.voice-search-btn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px;
+    transition: var(--transition-fast);
+    outline: none;
+}
+.voice-search-btn:hover {
+    color: var(--accent-copper);
+}
+
+.voice-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.voice-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.voice-modal {
+    background-color: var(--bg-card);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 320px;
+    padding: 30px 20px;
+    box-shadow: var(--shadow-medium);
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+.voice-modal-overlay.active .voice-modal {
+    transform: scale(1);
+}
+.voice-pulse-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: rgba(216, 67, 21, 0.1);
+    color: var(--accent-copper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    margin: 0 auto 20px;
+    position: relative;
+    animation: voicePulse 1.5s infinite ease-in-out;
+}
+@keyframes voicePulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(216, 67, 21, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 20px rgba(216, 67, 21, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(216, 67, 21, 0);
+    }
+}
+#voice-status-text {
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: var(--primary-bronze);
+}
+#voice-instructions-text {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* 9. WhatsApp Share-to-Discount Button */
+.btn-whatsapp-share {
+    background-color: #25d366 !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 10px 18px !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: var(--transition-fast) !important;
+    margin-top: 15px;
+    box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2);
+}
+.btn-whatsapp-share:hover {
+    background-color: #128c7e !important;
+    box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+}
+
 
 
