@@ -8,50 +8,12 @@ const shop = {
     searchQuery: "",
     debounceTimer: null,
     
-    // Carousel State
-    carouselIndex: 0,
-    carouselInterval: null,
-    totalSlides: 3,
-
     async init() {
         this.setupEventListeners();
         await this.loadProducts();
-        this.startCarousel();
     },
 
     setupEventListeners() {
-        // Carousel Navigation
-        const nextBtn = document.getElementById('carousel-next-btn');
-        const prevBtn = document.getElementById('carousel-prev-btn');
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                this.navigateCarousel(1);
-                this.resetCarouselTimer();
-            });
-        }
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                this.navigateCarousel(-1);
-                this.resetCarouselTimer();
-            });
-        }
-
-        // Carousel Dot Indicators
-        document.querySelectorAll('.carousel-dot').forEach(dot => {
-            dot.addEventListener('click', (e) => {
-                const idx = parseInt(e.target.getAttribute('data-index'));
-                this.showSlide(idx);
-                this.resetCarouselTimer();
-            });
-        });
-
-        // Banner Shop Button bindings
-        const bBrass = document.getElementById('btn-carousel-brass');
-        if (bBrass) bBrass.addEventListener('click', () => this.scrollToShop());
-        const bCopper = document.getElementById('btn-carousel-copper');
-        if (bCopper) bCopper.addEventListener('click', () => this.scrollToShop());
-        const bIron = document.getElementById('btn-carousel-iron');
-        if (bIron) bIron.addEventListener('click', () => this.scrollToShop());
 
         // Categories Click Event
         const catContainer = document.getElementById('categories-list');
@@ -140,35 +102,7 @@ const shop = {
         window.scrollTo({ top: shopTop - 80, behavior: 'smooth' });
     },
 
-    // --- Carousel Controls ---
-    startCarousel() {
-        this.carouselInterval = setInterval(() => {
-            this.navigateCarousel(1);
-        }, 5000);
-    },
-
-    resetCarouselTimer() {
-        clearInterval(this.carouselInterval);
-        this.startCarousel();
-    },
-
-    navigateCarousel(direction) {
-        this.carouselIndex = (this.carouselIndex + direction + this.totalSlides) % this.totalSlides;
-        this.showSlide(this.carouselIndex);
-    },
-
-    showSlide(index) {
-        const track = document.getElementById('carousel-track');
-        if (!track) return;
-
-        track.style.transform = `translateX(-${index * 33.333}%)`;
-        this.carouselIndex = index;
-
-        document.querySelectorAll('.carousel-dot').forEach((dot, idx) => {
-            if (idx === index) dot.classList.add('active');
-            else dot.classList.remove('active');
-        });
-    },
+    // (Legacy Carousel controls removed)
 
     resetFilters() {
         this.selectedCategory = "";
