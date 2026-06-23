@@ -1,0 +1,68 @@
+[
+  {
+    "id": "ORD-92813",
+    "user_id": 2,
+    "order_date": "2026-06-08T05:23:21.644Z",
+    "total_amount": 3798,
+    "status": "Delivered",
+    "shipping_name": "Rahul Kumar",
+    "shipping_address": "Flat 402, Green Glen Layout, Bellandur, Bangalore, Karnataka - 560103",
+    "payment_method": "Cash on Delivery"
+  },
+  {
+    "id": "ORD-48291",
+    "user_id": 2,
+    "order_date": "2026-06-10T05:23:21.644Z",
+    "total_amount": 1299,
+    "status": "Processing",
+    "shipping_name": "Rahul Kumar",
+    "shipping_address": "Flat 402, Green Glen Layout, Bellandur, Bangalore, Karnataka - 560103",
+    "payment_method": "Credit Card"
+  },
+  {
+    "id": "ORD-75783",
+    "user_id": 3,
+    "order_date": "2026-06-11T05:23:21.670Z",
+    "total_amount": 2558.4,
+    "status": "Processing",
+    "shipping_name": "Test Customer",
+    "shipping_address": "123 Test Street, New Delhi",
+    "payment_method": "Cash on Delivery"
+  },
+  {
+    "id": "ORD-76084",
+    "user_id": 4,
+    "order_date": "2026-06-11T05:36:41.570Z",
+    "total_amount": 1087.32,
+    "discount_amount": 191.88,
+    "coupon_code": "FESTIVE15",
+    "status": "Processing",
+    "shipping_name": "Regular Customer",
+    "shipping_address": "Sector 15, Dwarka, Delhi",
+    "payment_method": "Credit Card"
+  },
+  {
+    "id": "ORD-25323",
+    "user_id": 5,
+    "order_date": "2026-06-11T06:46:18.470Z",
+    "total_amount": 1087.32,
+    "discount_amount": 191.88,
+    "coupon_code": "FESTIVE15",
+    "status": "Processing",
+    "shipping_name": "Regular Customer",
+    "shipping_address": "Sector 15, Dwarka, Delhi",
+    "payment_method": "Credit Card"
+  },
+  {
+    "id": "ORD-56717",
+    "user_id": 6,
+    "order_date": "2026-06-11T06:48:57.828Z",
+    "total_amount": 2249.1,
+    "discount_amount": 0,
+    "coupon_code": "",
+    "status": "Processing",
+    "shipping_name": "Sujal",
+    "shipping_address": "C/402 swastik homes ",
+    "payment_method": "UPI Pay"
+  }
+]
