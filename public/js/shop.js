@@ -375,6 +375,7 @@ const shop = {
             this.renderReviewForm(productId);
         } catch (err) {
             app.showToast("Failed to load product specifications.", "error");
+        }
     },
 
     setMainImage(thumbEl, imageUrl) {
