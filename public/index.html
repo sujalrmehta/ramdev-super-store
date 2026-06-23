@@ -28,6 +28,13 @@
             </div>
             
             <div class="nav-actions">
+                <div class="lang-selector-container">
+                    <select class="lang-select" id="lang-select" onchange="app.changeLanguage(this.value)">
+                        <option value="en">English</option>
+                        <option value="hi">हिन्दी (Hindi)</option>
+                    </select>
+                </div>
+                
                 <a href="#" class="nav-action-icon" id="admin-portal-btn" title="Store Registry" onclick="event.preventDefault(); document.getElementById('left-hamburger-btn') && document.getElementById('left-hamburger-btn').click();">
                     <i class="fa-regular fa-clipboard"></i>
                 </a>
@@ -90,11 +97,47 @@
         <!-- VIEW: HOME & SHOPPING VIEW -->
         <section id="view-home" class="page-view">
             
-            <!-- Hero Banner -->
-            <div class="hero-banner-static">
-                <div class="hero-banner-content">
-                    <h1>Artisanal Kitchen Utensils & Cookware</h1>
-                    <p>Discover our curated selection of premium handcrafted brass dinnerware, pure hammered copper vessels, and professional culinary chef cutlery.</p>
+            <!-- Hero Carousel Banner -->
+            <div class="hero-carousel" id="hero-carousel">
+                <div class="carousel-inner">
+                    <!-- Slide 1 -->
+                    <div class="carousel-item active" style="background-image: url('https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?q=80&w=1200&auto=format&fit=crop');">
+                        <div class="carousel-overlay"></div>
+                        <div class="carousel-caption">
+                            <h2 data-translate="hero1_title">Royal Golden Brass Dinnerware</h2>
+                            <p data-translate="hero1_desc">Experience traditional wellness and royal elegance with our handcrafted Ayurvedic brass plates, bowls, and glasses.</p>
+                            <a href="#" class="carousel-btn" data-translate="shop_now" onclick="app.scrollToCatalog()">Shop Collection</a>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?q=80&w=1200&auto=format&fit=crop');">
+                        <div class="carousel-overlay"></div>
+                        <div class="carousel-caption">
+                            <h2 data-translate="hero2_title">Pure Hammered Copper Vessels</h2>
+                            <p data-translate="hero2_desc">Boost your daily immunity and digestion. Storing water in copper is a time-tested Ayurvedic wellness practice.</p>
+                            <a href="#" class="carousel-btn" data-translate="shop_now" onclick="app.scrollToCatalog()">Shop Collection</a>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?q=80&w=1200&auto=format&fit=crop');">
+                        <div class="carousel-overlay"></div>
+                        <div class="carousel-caption">
+                            <h2 data-translate="hero3_title">Pre-Seasoned Cast Iron Woks</h2>
+                            <p data-translate="hero3_desc">Traditional hand-cast iron kadhais and skillets. Infuses your recipes with dietary iron naturally.</p>
+                            <a href="#" class="carousel-btn" data-translate="shop_now" onclick="app.scrollToCatalog()">Shop Collection</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Controls -->
+                <button class="carousel-control prev" onclick="app.moveCarousel(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                <button class="carousel-control next" onclick="app.moveCarousel(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                
+                <!-- Indicators -->
+                <div class="carousel-indicators">
+                    <span class="carousel-dot active" onclick="app.setCarouselSlide(0)"></span>
+                    <span class="carousel-dot" onclick="app.setCarouselSlide(1)"></span>
+                    <span class="carousel-dot" onclick="app.setCarouselSlide(2)"></span>
                 </div>
             </div>
 
@@ -152,6 +195,34 @@
                     <!-- Rendered dynamically via shop.js -->
                 </div>
             </div>
+            
+            <!-- State-Wise Craft Highlight Section -->
+            <section class="state-craft-section">
+                <div class="section-title-center">
+                    <h2 data-translate="crafts_title">Artisanal Heritage of India</h2>
+                    <p data-translate="crafts_desc">Handcrafted with love by traditional master artisans across regional India</p>
+                </div>
+                <div class="craft-grid">
+                    <div class="craft-card">
+                        <div class="craft-icon"><i class="fa-solid fa-fire"></i></div>
+                        <h3 data-translate="craft1_title">Moradabad Brass Craft</h3>
+                        <p data-translate="craft1_desc">Sourced from Uttar Pradesh's famous 'Peetal Nagri'. Hammered and polished by hand using generation-old sand casting techniques.</p>
+                        <span class="craft-state-tag">Uttar Pradesh</span>
+                    </div>
+                    <div class="craft-card">
+                        <div class="craft-icon"><i class="fa-solid fa-droplet"></i></div>
+                        <h3 data-translate="craft2_title">Ayurvedic Hammered Copper</h3>
+                        <p data-translate="craft2_desc">Crafted by Maharashtra's traditional copper-smiths. Hammered textures maximize surface contact to purify drinking water.</p>
+                        <span class="craft-state-tag">Maharashtra</span>
+                    </div>
+                    <div class="craft-card">
+                        <div class="craft-icon"><i class="fa-solid fa-cubes"></i></div>
+                        <h3 data-translate="craft3_title">Sinnamani Cast Iron</h3>
+                        <p data-translate="craft3_desc">Traditional heavy kadhais sand-cast in Tamil Nadu. Double organic pre-seasoning with sesame oil for a non-stick finish.</p>
+                        <span class="craft-state-tag">Tamil Nadu</span>
+                    </div>
+                </div>
+            </section>
             
             <!-- Hidden elements for JS compatibility -->
             <span id="product-list-count" style="display:none;">0</span>
@@ -535,6 +606,40 @@
             <p>Admin Login: admin@ramdev.com / admin123</p>
         </div>
     </footer>
+
+    <!-- UPI SIMULATED MODAL -->
+    <div class="upi-modal-overlay" id="upi-modal-overlay">
+        <div class="upi-modal">
+            <div class="upi-header">
+                <h3 data-translate="upi_payment">UPI Payment</h3>
+                <button class="upi-close" onclick="app.closeUpiModal()">&times;</button>
+            </div>
+            <div class="upi-amount-badge">₹<span id="upi-modal-amount">0.00</span></div>
+            <div class="upi-qr-image-container">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=ramdevstore@ybl%26pn=Ramdev%2520Super%2520Store%26am=0%26cu=INR" id="upi-qr-img" alt="UPI QR Code">
+            </div>
+            <p class="upi-instructions" data-translate="upi_instructions">Scan this QR code using Google Pay, PhonePe, Paytm or BHIM UPI to complete payment.</p>
+            <button class="upi-btn-simulate" onclick="app.simulateUpiSuccess()" data-translate="simulate_success">Simulate Payment Success</button>
+        </div>
+    </div>
+
+    <!-- HEALTH BENEFITS DIALOG -->
+    <div class="health-modal-overlay" id="health-modal-overlay">
+        <div class="health-modal">
+            <div class="health-header">
+                <h3 id="health-modal-title"><i class="fa-solid fa-heart-pulse"></i> Health Benefits</h3>
+                <button class="health-close" onclick="app.closeHealthModal()">&times;</button>
+            </div>
+            <div class="health-body" id="health-modal-content">
+                <!-- Dynamic health benefits details -->
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/919999999999?text=Hello%20Ramdev%20Store,%20I%20have%20an%20inquiry%20about%20your%20products." class="whatsapp-float" target="_blank" title="Chat on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
 
     <!-- Client Script Modules -->
     <script src="/js/api.js"></script>
