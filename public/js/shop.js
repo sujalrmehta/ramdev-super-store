@@ -388,7 +388,7 @@ const shop = {
                         <input type="hidden" id="selected-detail-size" value="${sizeList[0]}">
                     </div>
 
-                    <div class="detail-add-row">
+                    <div class="detail-add-row" style="display: flex; flex-direction: column; gap: 10px;">
                         ${prod.stock > 0 ? `
                             <button class="btn btn-primary" onclick="shop.addDetailCart(${prod.id})">
                                 Add to Basket <i class="fa-solid fa-basket-shopping"></i>
@@ -398,6 +398,10 @@ const shop = {
                                 Out of Stock
                             </button>
                         `}
+                        
+                        <button class="btn-whatsapp-share" onclick="shop.shareProductOnWhatsApp(${prod.id}, '${prod.name}')">
+                            <i class="fa-brands fa-whatsapp"></i> Share on WhatsApp (Get 5% OFF)
+                        </button>
                     </div>
                 </div>
                 
@@ -601,6 +605,19 @@ const shop = {
         } catch (err) {
             app.showToast("Failed to post feedback.", "error");
         }
+    },
+
+    shareProductOnWhatsApp(productId, productName) {
+        const shareText = `Check out this beautiful pure hand-crafted ${productName} from Ramdev Store! https://ramdev-super-store.onrender.com`;
+        const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+        window.open(url, '_blank');
+
+        // Simulate returning to the page and apply the discount
+        setTimeout(() => {
+            if (typeof cart !== 'undefined' && typeof cart.applyShareCoupon === 'function') {
+                cart.applyShareCoupon();
+            }
+        }, 3000);
     }
 };
 
