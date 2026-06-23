@@ -265,7 +265,8 @@ const INITIAL_REVIEWS = [
 const PROMO_COUPONS = {
     "FESTIVE15": { code: "FESTIVE15", type: "percentage", value: 15, description: "15% Off on all utensils" },
     "BRONZE10": { code: "BRONZE10", type: "percentage", value: 10, description: "10% Off on select tableware" },
-    "RAMDEV50": { code: "RAMDEV50", type: "flat", value: 50.00, description: "Flat ₹50 discount on your order" }
+    "RAMDEV50": { code: "RAMDEV50", type: "flat", value: 50.00, description: "Flat ₹50 discount on your order" },
+    "SHARE5": { code: "SHARE5", type: "percentage", value: 5, description: "WhatsApp Sharing Reward (5% OFF)" }
 };
 
 // Helper Functions
@@ -360,10 +361,59 @@ const db = {
 
         if (filters.search) {
             const query = filters.search.toLowerCase();
-            products = products.filter(p => 
-                p.name.toLowerCase().includes(query) || 
-                p.description.toLowerCase().includes(query)
-            );
+            
+            // Map Hindi/transliterated terms to English product keywords for bilingual search
+            const termMap = {
+                'पीतल': 'brass',
+                'peetal': 'brass',
+                'तांबा': 'copper',
+                'तांबे': 'copper',
+                'tamba': 'copper',
+                'tambha': 'copper',
+                'लोहा': 'iron',
+                'लोहे': 'iron',
+                'loha': 'iron',
+                'मिट्टी': 'clay',
+                'mitti': 'clay',
+                'कांस्य': 'bronze',
+                'कंसा': 'bronze',
+                'kansa': 'bronze',
+                'स्टील': 'steel',
+                'steel': 'steel',
+                'चम्मच': 'spoon',
+                'chamach': 'spoon',
+                'थाली': 'thali',
+                'thali': 'thali',
+                'कड़ाही': 'kadhai',
+                'kadahi': 'kadhai',
+                'kadhai': 'kadhai',
+                'तवा': 'tawa',
+                'tawa': 'tawa',
+                'कटोरी': 'bowl',
+                'katori': 'bowl',
+                'गिलास': 'glass',
+                'glass': 'glass'
+            };
+
+            let queryTerms = [query];
+            for (const [key, value] of Object.entries(termMap)) {
+                if (query.includes(key)) {
+                    queryTerms.push(value);
+                }
+            }
+
+            products = products.filter(p => {
+                const name = p.name.toLowerCase();
+                const desc = p.description.toLowerCase();
+                const mat = p.material ? p.material.toLowerCase() : '';
+                const cat = p.category ? p.category.toLowerCase() : '';
+                return queryTerms.some(term => 
+                    name.includes(term) || 
+                    desc.includes(term) || 
+                    mat.includes(term) || 
+                    cat.includes(term)
+                );
+            });
         }
 
         if (filters.category) {
