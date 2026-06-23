@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" href="https://img.icons8.com/color/192/000000/kitchen.png">
     
     <!-- CSS stylesheet link -->
-    <link rel="stylesheet" href="/css/style.css?v=2">
+    <link rel="stylesheet" href="/css/style.css?v=3">
     <!-- FontAwesome Icons CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Chart.js CDN for Admin dashboard analytics -->
@@ -164,32 +164,7 @@
             </div>
 
             <!-- Filters & Sorting Row -->
-            <div class="filters-row-container">
-                <div class="filter-group-horizontal">
-                    <span class="filter-by-label">Filter By:</span>
-                    <div class="select-wrapper">
-                        <label>Brand:</label>
-                        <select id="filter-materials-select">
-                            <option value="">All Brands</option>
-                            <option value="Copper">Copper Ware</option>
-                            <option value="Brass">Brass Ware</option>
-                            <option value="Stainless Steel">Stainless Steel</option>
-                            <option value="Cast Iron">Cast Iron</option>
-                            <option value="Wood">Wood</option>
-                            <option value="Clay">Clay</option>
-                        </select>
-                    </div>
-                    <div class="select-wrapper">
-                        <label>Size:</label>
-                        <select id="filter-sizes-select">
-                            <option value="">All Sizes</option>
-                            <option value="Standard">Standard</option>
-                            <option value="Litre">Litre / Capacity</option>
-                            <option value="Set">Sets</option>
-                        </select>
-                    </div>
-                </div>
-                
+            <div class="filters-row-container" style="justify-content: flex-end;">
                 <div class="sort-wrapper">
                     <label>Sort By:</label>
                     <select id="sort-select">
@@ -201,10 +176,49 @@
                 </div>
             </div>
 
-            <!-- Catalog Section -->
-            <div class="shop-section-minimal">
-                <div class="products-grid" id="products-catalog-grid">
-                    <!-- Rendered dynamically via shop.js -->
+            <!-- Shop Sidebar & Catalog Section -->
+            <div class="shop-layout-with-sidebar">
+                <aside class="shop-sidebar">
+                    <h3 class="sidebar-title">Filters</h3>
+                    
+                    <div class="sidebar-filter-group">
+                        <label class="sidebar-label">Price Range</label>
+                        <input type="range" id="filter-price-slider" class="sidebar-slider" min="0" max="5000" step="100" value="5000">
+                        <div class="slider-val-display">Up to ₹<span id="price-slider-value">5000</span></div>
+                    </div>
+                    
+                    <div class="sidebar-filter-group">
+                        <label class="sidebar-label">Material</label>
+                        <div class="checkbox-list" id="filter-materials">
+                            <label><input type="checkbox" class="mat-checkbox" value="Copper"> Copper</label>
+                            <label><input type="checkbox" class="mat-checkbox" value="Brass"> Brass</label>
+                            <label><input type="checkbox" class="mat-checkbox" value="Cast Iron"> Cast Iron</label>
+                            <label><input type="checkbox" class="mat-checkbox" value="Clay"> Clay</label>
+                        </div>
+                    </div>
+                    
+                    <div class="sidebar-filter-group">
+                        <label class="sidebar-label">Health Benefit</label>
+                        <div class="checkbox-list">
+                            <label><input type="checkbox" class="ben-checkbox" value="immunity"> Immunity Boost</label>
+                            <label><input type="checkbox" class="ben-checkbox" value="iron"> Iron Enrichment</label>
+                            <label><input type="checkbox" class="ben-checkbox" value="digestion"> Digestion</label>
+                        </div>
+                    </div>
+                    
+                    <button id="btn-reset-filters" class="btn btn-secondary" style="width:100%; margin-top:10px;">Clear All Filters</button>
+                    
+                    <!-- Hidden elements for JS compatibility -->
+                    <span id="product-list-count" style="display:none;">0</span>
+                    <select id="filter-materials-select" style="display:none;"><option value=""></option></select>
+                    <select id="filter-sizes-select" style="display:none;"><option value=""></option></select>
+                </aside>
+
+                <!-- Catalog Section -->
+                <div class="shop-section-minimal" style="flex: 1;">
+                    <div class="products-grid" id="products-catalog-grid">
+                        <!-- Rendered dynamically via shop.js -->
+                    </div>
                 </div>
             </div>
             
@@ -236,12 +250,7 @@
                 </div>
             </section>
             
-            <!-- Hidden elements for JS compatibility -->
-            <span id="product-list-count" style="display:none;">0</span>
-            <button id="btn-reset-filters" style="display:none;"></button>
-            <input type="range" id="filter-price-slider" min="300" max="5000" step="100" value="5000" style="display:none;">
-            <span id="price-slider-value" style="display:none;">5000</span>
-            <div id="filter-materials" style="display:none;"></div>
+            <!-- End of View Home -->
         </section>
 
 
@@ -451,6 +460,14 @@
             <button class="btn-close-cart" id="cart-close-btn"><i class="fa-solid fa-xmark"></i></button>
         </div>
         
+        <!-- FREE SHIPPING PROGRESS BAR -->
+        <div class="free-shipping-progress-container" id="shipping-progress-container">
+            <p id="shipping-progress-text">Add <span id="shipping-amount-left">₹2000.00</span> more for <strong>FREE Shipping!</strong></p>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="shipping-progress-fill"></div>
+            </div>
+        </div>
+        
         <div class="cart-items-list" id="cart-drawer-items">
             <!-- Populated via cart.js -->
         </div>
@@ -501,7 +518,12 @@
                     </div>
                     <div class="form-group">
                         <label for="login-password">Password</label>
-                        <input type="password" id="login-password" required>
+                        <div class="password-wrapper">
+                            <input type="password" id="login-password" required>
+                            <button type="button" class="toggle-password-btn" onclick="app.togglePassword('login-password', this)" title="Show/Hide Password">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Log In <i class="fa-solid fa-arrow-right-to-bracket"></i></button>
                 </form>
@@ -527,7 +549,12 @@
                     </div>
                     <div class="form-group">
                         <label for="signup-password">Password</label>
-                        <input type="password" id="signup-password" minlength="6" required>
+                        <div class="password-wrapper">
+                            <input type="password" id="signup-password" minlength="6" required>
+                            <button type="button" class="toggle-password-btn" onclick="app.togglePassword('signup-password', this)" title="Show/Hide Password">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Sign Up <i class="fa-solid fa-user-plus"></i></button>
                 </form>
@@ -703,13 +730,13 @@
     </div>
 
     <!-- Client Script Modules -->
-    <script src="/js/api.js?v=2"></script>
-    <script src="/js/cart.js?v=2"></script>
-    <script src="/js/shop.js?v=2"></script>
-    <script src="/js/wishlist.js?v=2"></script>
-    <script src="/js/admin.js?v=2"></script>
-    <script src="/js/app.js?v=2"></script>
-    <script src="/js/ai-chat.js?v=2"></script>
+    <script src="/js/api.js?v=3"></script>
+    <script src="/js/cart.js?v=3"></script>
+    <script src="/js/shop.js?v=3"></script>
+    <script src="/js/wishlist.js?v=3"></script>
+    <script src="/js/admin.js?v=3"></script>
+    <script src="/js/app.js?v=3"></script>
+    <script src="/js/ai-chat.js?v=3"></script>
     
     <!-- PWA Service Worker Registration -->
     <script>
