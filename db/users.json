@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Ramdev Store Admin",
+    "email": "admin@ramdev.com",
+    "password": "admin123",
+    "role": "admin",
+    "created_at": "2026-05-12T05:23:21.644Z"
+  },
+  {
+    "id": 2,
+    "name": "Rahul Kumar",
+    "email": "customer@ramdev.com",
+    "password": "pass123",
+    "role": "customer",
+    "created_at": "2026-05-27T05:23:21.644Z"
+  },
+  {
+    "id": 3,
+    "name": "Test Customer",
+    "email": "tester@ramdev.com",
+    "password": "testpassword",
+    "role": "customer",
+    "created_at": "2026-06-11T05:23:21.660Z"
+  },
+  {
+    "id": 4,
+    "name": "Regular Customer",
+    "email": "regular@ramdev.com",
+    "password": "pass12345password",
+    "role": "customer",
+    "created_at": "2026-06-11T05:36:41.568Z"
+  },
+  {
+    "id": 5,
+    "name": "Regular Customer",
+    "email": "regular@ramdev.com",
+    "password": "pass12345password",
+    "role": "customer",
+    "created_at": "2026-06-11T06:46:18.468Z"
+  },
+  {
+    "id": 6,
+    "name": "Sujal",
+    "email": "sujalrmehta2003@gmail.com",
+    "password": "123456",
+    "role": "customer",
+    "created_at": "2026-06-11T06:48:08.414Z"
+  }
+]
