@@ -460,9 +460,10 @@ const server = http.createServer(async (req, res) => {
     }
 });
 
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
     console.log(`=======================================================`);
     console.log(`   Ramdev Super Store Server Running on http://localhost:${PORT}`);
+    console.log(`   Network Access: http://192.168.1.35:${PORT}`);
     console.log(`   Running via: ${process.argv[0]}`);
     console.log(`=======================================================`);
 });
