@@ -7,6 +7,12 @@ const db = require('./db');
 
 const PORT = process.env.PORT || 5173;
 const PUBLIC_DIR = path.join(__dirname, 'public');
+const RECEIPTS_DIR = path.join(__dirname, 'db', 'receipts');
+
+// Ensure Receipts directory exists
+if (!require('fs').existsSync(RECEIPTS_DIR)) {
+    try { require('fs').mkdirSync(RECEIPTS_DIR, { recursive: true }); } catch (e) {}
+}
 
 const ACTIVE_SESSIONS = {}; // token -> user_id
 
@@ -237,6 +243,21 @@ router.post('/api/coupons/apply', async (req, res) => {
     sendJSON(res, 200, coupon);
 });
 
+// AI Assistant Chat Route
+router.post('/api/chat', async (req, res) => {
+    const body = await parseBody(req);
+    if (!body.message) {
+        return sendJSON(res, 400, { error: "Message is required." });
+    }
+    const aiEngine = require('./ai_engine');
+    try {
+        const reply = await aiEngine.processMessage(body.message);
+        sendJSON(res, 200, { reply });
+    } catch (e) {
+        sendJSON(res, 500, { error: "AI Engine error." });
+    }
+});
+
 // Checkout Cart (supports coupon applying)
 router.post('/api/checkout', async (req, res) => {
     const user = authenticate(req);
@@ -250,6 +271,63 @@ router.post('/api/checkout', async (req, res) => {
 
     try {
         const order = db.createOrder(user.id, shippingInfo, items, coupon_code || "");
+        
+        // Generate simulated HTML Receipt
+        const receiptHtml = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Receipt - ${order.id}</title>
+            <style>
+                body { font-family: sans-serif; padding: 40px; background: #f9f9f9; }
+                .receipt-box { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+                .header { text-align: center; border-bottom: 2px solid #d84315; padding-bottom: 20px; margin-bottom: 20px; }
+                .header h1 { color: #d84315; margin: 0; }
+                .details p { margin: 5px 0; color: #555; }
+                .items { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                .items th, .items td { text-align: left; padding: 12px; border-bottom: 1px solid #eee; }
+                .total { text-align: right; font-size: 20px; font-weight: bold; margin-top: 20px; color: #333; }
+            </style>
+        </head>
+        <body>
+            <div class="receipt-box">
+                <div class="header">
+                    <h1>Ramdev Super Store</h1>
+                    <p>Official Invoice / Receipt</p>
+                </div>
+                <div class="details">
+                    <p><strong>Order ID:</strong> ${order.id}</p>
+                    <p><strong>Date:</strong> ${new Date(order.order_date).toLocaleString()}</p>
+                    <p><strong>Customer:</strong> ${shippingInfo.name}</p>
+                    <p><strong>Shipping Address:</strong> ${shippingInfo.address}</p>
+                </div>
+                <table class="items">
+                    <thead>
+                        <tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr>
+                    </thead>
+                    <tbody>
+                        ${items.map(i => `<tr>
+                            <td>${i.name} (${i.size})</td>
+                            <td>${i.qty}</td>
+                            <td>₹${i.price.toFixed(2)}</td>
+                            <td>₹${(i.price * i.qty).toFixed(2)}</td>
+                        </tr>`).join('')}
+                    </tbody>
+                </table>
+                <div class="total">
+                    Grand Total: ₹${order.total_amount.toFixed(2)}
+                </div>
+                <p style="text-align: center; color: #888; margin-top: 40px; font-size: 12px;">Thank you for shopping with Ramdev Super Store!</p>
+            </div>
+        </body>
+        </html>`;
+        
+        try {
+            require('fs').writeFileSync(path.join(RECEIPTS_DIR, `${order.id}.html`), receiptHtml, 'utf8');
+        } catch (err) {
+            console.error("Failed to write receipt file:", err);
+        }
+
         sendJSON(res, 201, order);
     } catch (err) {
         sendJSON(res, 400, { error: err.message });
@@ -358,6 +436,7 @@ const server = http.createServer(async (req, res) => {
     res.setHeader('X-XSS-Protection', '1; mode=block');
     res.setHeader('Content-Security-Policy', "default-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' https:;");
 
+    console.log(`[API Request] ${req.method} ${req.url}`);
     if (req.method === 'OPTIONS') {
         res.writeHead(204);
         res.end();
