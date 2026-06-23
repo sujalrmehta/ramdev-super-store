@@ -413,12 +413,33 @@ const app = {
     setupThemes() {
         const toggleBtn = document.getElementById('theme-toggle-btn');
         const savedTheme = localStorage.getItem('ramdev_theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-        if (savedTheme === 'dark') {
+        // Apply theme on load based on saved preference or system setting
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
             document.body.classList.add('dark-mode');
             if (toggleBtn) {
-                toggleBtn.innerHTML = `<i class="fa-solid fa-sun" style="color: var(--accent-gold);"></i>`;
+                toggleBtn.innerHTML = `<i class="fa-solid fa-sun" style="color: var(--accent-gold);"></i> <span>Theme</span>`;
             }
+        } else {
+            if (toggleBtn) {
+                toggleBtn.innerHTML = `<i class="fa-solid fa-moon"></i> <span>Theme</span>`;
+            }
+        }
+
+        // Listen for system theme changes if user hasn't explicitly set a preference
+        if (window.matchMedia) {
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                if (!localStorage.getItem('ramdev_theme')) {
+                    if (e.matches) {
+                        document.body.classList.add('dark-mode');
+                        if (toggleBtn) toggleBtn.innerHTML = `<i class="fa-solid fa-sun" style="color: var(--accent-gold);"></i> <span>Theme</span>`;
+                    } else {
+                        document.body.classList.remove('dark-mode');
+                        if (toggleBtn) toggleBtn.innerHTML = `<i class="fa-solid fa-moon"></i> <span>Theme</span>`;
+                    }
+                }
+            });
         }
 
         if (toggleBtn) {
@@ -426,11 +447,11 @@ const app = {
                 const isDark = document.body.classList.toggle('dark-mode');
                 if (isDark) {
                     localStorage.setItem('ramdev_theme', 'dark');
-                    toggleBtn.innerHTML = `<i class="fa-solid fa-sun" style="color: var(--accent-gold);"></i>`;
+                    toggleBtn.innerHTML = `<i class="fa-solid fa-sun" style="color: var(--accent-gold);"></i> <span>Theme</span>`;
                     this.showToast("Dark Mode Activated", "success");
                 } else {
                     localStorage.setItem('ramdev_theme', 'light');
-                    toggleBtn.innerHTML = `<i class="fa-solid fa-moon"></i>`;
+                    toggleBtn.innerHTML = `<i class="fa-solid fa-moon"></i> <span>Theme</span>`;
                     this.showToast("Light Mode Activated", "success");
                 }
                 
@@ -918,7 +939,7 @@ ${order.shipping_address}
         } catch (err) {
             this.showToast(err.message || 'Error creating order.', 'error');
         }
-    }
+    },
 
     // --- Bilingual Voice Search Controller ---
     recognition: null,
