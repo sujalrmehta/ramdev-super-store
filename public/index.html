@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramdev Super Store | Premium Kitchen Utensils & Cookware</title>
+    <!-- CSS stylesheet link -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js CDN for Admin dashboard analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo" id="nav-logo">
+                RAMDEV STORE
+            </a>
+            
+            <div class="search-bar-container">
+                <i class="fa-solid fa-magnifying-glass search-glass-icon"></i>
+                <input type="text" id="search-input" placeholder="Search premium products..." autocomplete="off">
+                <!-- Search auto-suggestions dropdown -->
+                <div class="search-suggestions-box" id="search-suggestions"></div>
+            </div>
+            
+            <div class="nav-actions">
+                <a href="#" class="nav-action-icon" id="admin-portal-btn" title="Store Registry" onclick="event.preventDefault(); document.getElementById('left-hamburger-btn') && document.getElementById('left-hamburger-btn').click();">
+                    <i class="fa-regular fa-clipboard"></i>
+                </a>
+                
+                <button class="nav-action-icon" id="cart-toggle-btn" title="Shopping Cart">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="cart-count" id="cart-badge-count">0</span>
+                </button>
+                
+                <div id="user-nav-area">
+                    <button class="btn-signin" id="login-nav-btn">
+                        <i class="fa-regular fa-user"></i>
+                        <span>Sign In</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Hidden/compat trigger for drawer logic -->
+        <button id="left-hamburger-btn" style="display:none;"></button>
+    </header>
+
+    <!-- LEFT SIDEBAR HAMBURGER DRAWER (AMAZON STYLE) -->
+    <div class="left-drawer" id="left-hamburger-drawer">
+        <div class="left-drawer-header" id="left-drawer-user-info">
+            <i class="fa-solid fa-circle-user"></i> Hello, Guest User
+            <button class="left-drawer-close" id="left-drawer-close-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="left-drawer-content">
+            <div class="left-drawer-section">
+                <h3>Trending Categories</h3>
+                <a href="#" class="drawer-link cat-drawer-link" data-cat="Cookware"><i class="fa-solid fa-kitchen-set"></i> Cookware</a>
+                <a href="#" class="drawer-link cat-drawer-link" data-cat="Serveware"><i class="fa-solid fa-wine-glass"></i> Serveware</a>
+                <a href="#" class="drawer-link cat-drawer-link" data-cat="Dinnerware"><i class="fa-solid fa-plate-wheat"></i> Dinnerware</a>
+                <a href="#" class="drawer-link cat-drawer-link" data-cat="Cutlery"><i class="fa-solid fa-spoon"></i> Cutlery</a>
+                <a href="#" class="drawer-link cat-drawer-link" data-cat="Accessories"><i class="fa-solid fa-cubes"></i> Accessories</a>
+            </div>
+            <div class="left-drawer-section">
+                <h3>Shop by Material</h3>
+                <a href="#" class="drawer-link mat-drawer-link" data-mat="Copper"><i class="fa-solid fa-circle" style="color:#d84315;"></i> Copper Ware</a>
+                <a href="#" class="drawer-link mat-drawer-link" data-mat="Brass"><i class="fa-solid fa-circle" style="color:#cca43b;"></i> Brass Ware</a>
+                <a href="#" class="drawer-link mat-drawer-link" data-mat="Stainless Steel"><i class="fa-solid fa-circle" style="color:#b0bec5;"></i> Stainless Steel</a>
+                <a href="#" class="drawer-link mat-drawer-link" data-mat="Cast Iron"><i class="fa-solid fa-circle" style="color:#37474f;"></i> Cast Iron</a>
+                <a href="#" class="drawer-link mat-drawer-link" data-mat="Clay"><i class="fa-solid fa-circle" style="color:#8d6e63;"></i> Clay / Earthenware</a>
+            </div>
+            <div class="left-drawer-section" style="border-top: 1px solid var(--border-color); padding-top: 15px;" id="drawer-admin-section">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </div>
+    <!-- Blur Overlay for left drawer -->
+    <div class="drawer-overlay-blur" id="drawer-blur-overlay"></div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- MAIN VIEWS WRAPPER -->
+    <main id="main-content">
+
+        <!-- VIEW: HOME & SHOPPING VIEW -->
+        <section id="view-home" class="page-view">
+            
+            <!-- Hero Banner -->
+            <div class="hero-banner-static">
+                <div class="hero-banner-content">
+                    <h1>Artisanal Kitchen Utensils & Cookware</h1>
+                    <p>Discover our curated selection of premium handcrafted brass dinnerware, pure hammered copper vessels, and professional culinary chef cutlery.</p>
+                </div>
+            </div>
+
+            <!-- Category Tabs Pill Navigation -->
+            <div class="categories-tabs" id="categories-list">
+                <button class="category-card active" data-category="">All Products</button>
+                <button class="category-card" data-category="Cookware">Cookware</button>
+                <button class="category-card" data-category="Dinnerware">Dinnerware</button>
+                <button class="category-card" data-category="Cutlery">Cutlery</button>
+                <button class="category-card" data-category="Accessories">Accessories</button>
+                <button class="category-card" data-category="Bakeware">Bakeware</button>
+            </div>
+
+            <!-- Filters & Sorting Row -->
+            <div class="filters-row-container">
+                <div class="filter-group-horizontal">
+                    <span class="filter-by-label">Filter By:</span>
+                    <div class="select-wrapper">
+                        <label>Brand:</label>
+                        <select id="filter-materials-select">
+                            <option value="">All Brands</option>
+                            <option value="Copper">Copper Ware</option>
+                            <option value="Brass">Brass Ware</option>
+                            <option value="Stainless Steel">Stainless Steel</option>
+                            <option value="Cast Iron">Cast Iron</option>
+                            <option value="Wood">Wood</option>
+                            <option value="Clay">Clay</option>
+                        </select>
+                    </div>
+                    <div class="select-wrapper">
+                        <label>Size:</label>
+                        <select id="filter-sizes-select">
+                            <option value="">All Sizes</option>
+                            <option value="Standard">Standard</option>
+                            <option value="Litre">Litre / Capacity</option>
+                            <option value="Set">Sets</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="sort-wrapper">
+                    <label>Sort By:</label>
+                    <select id="sort-select">
+                        <option value="default">Featured</option>
+                        <option value="priceAsc">Price: Low to High</option>
+                        <option value="priceDesc">Price: High to Low</option>
+                        <option value="rating">Popularity (Rating)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Catalog Section -->
+            <div class="shop-section-minimal">
+                <div class="products-grid" id="products-catalog-grid">
+                    <!-- Rendered dynamically via shop.js -->
+                </div>
+            </div>
+            
+            <!-- Hidden elements for JS compatibility -->
+            <span id="product-list-count" style="display:none;">0</span>
+            <button id="btn-reset-filters" style="display:none;"></button>
+            <input type="range" id="filter-price-slider" min="300" max="5000" step="100" value="5000" style="display:none;">
+            <span id="price-slider-value" style="display:none;">5000</span>
+            <div id="filter-materials" style="display:none;"></div>
+        </section>
+
+
+        <!-- VIEW: CUSTOMER DASHBOARD (MY ORDERS) -->
+        <section id="view-customer-dashboard" class="page-view" style="display: none;">
+            <div class="customer-dashboard-layout">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                    <h2>Customer Profile Portal</h2>
+                    <button class="btn btn-secondary" onclick="app.showView('home')" style="font-size: 13px; padding: 8px 16px;">Back to Shopping</button>
+                </div>
+                
+                <div class="admin-section-box" style="margin-bottom: 30px;">
+                    <h3>Profile Information</h3>
+                    <div style="font-size: 14px; margin-top: 10px;">
+                        <p><strong>Name:</strong> <span id="profile-user-name">Rahul Kumar</span></p>
+                        <p style="margin-top: 6px;"><strong>Email:</strong> <span id="profile-user-email">customer@ramdev.com</span></p>
+                        <p style="margin-top: 6px;"><strong>Membership:</strong> Standard Premium Guest</p>
+                    </div>
+                </div>
+
+                <div class="admin-section-box">
+                    <h3>My Order History</h3>
+                    <div class="customer-orders-container" id="customer-orders-list">
+                        <!-- Populated dynamically via app.js -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- VIEW: CHECKOUT WIZARD -->
+        <section id="view-checkout" class="page-view" style="display: none;">
+            <div class="checkout-view">
+                <h2>Secure Checkout</h2>
+                <div class="checkout-grid">
+                    <!-- Delivery Information -->
+                    <div class="checkout-card">
+                        <h3>Delivery Address</h3>
+                        <form id="checkout-form">
+                            <div class="form-group">
+                                <label for="shipping-name">Full Name</label>
+                                <input type="text" id="shipping-name" placeholder="Enter your full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="shipping-phone">Phone Number</label>
+                                <input type="tel" id="shipping-phone" placeholder="Enter 10-digit mobile number" required pattern="[0-9]{10}">
+                            </div>
+                            <div class="form-group">
+                                <label for="shipping-address">Shipping Address</label>
+                                <textarea id="shipping-address" rows="4" placeholder="House no, Building, Street, Area name, City, Pincode" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="shipping-payment">Payment Method</label>
+                                <select id="shipping-payment">
+                                    <option value="Cash on Delivery">Cash on Delivery (COD)</option>
+                                    <option value="UPI Pay">UPI Payment (GPay, PhonePe, Paytm)</option>
+                                    <option value="Credit / Debit Card">Credit / Debit Card</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block" style="margin-top: 15px;">Place Order <i class="fa-solid fa-lock"></i></button>
+                        </form>
+                    </div>
+                    
+                    <!-- Order Items summary -->
+                    <div class="checkout-card">
+                        <h3>Order Summary</h3>
+                        <div id="checkout-items-list" style="margin-bottom: 20px;">
+                            <!-- Items list populated via cart.js -->
+                        </div>
+                        
+                        <!-- Promo Code entry -->
+                        <div class="form-group" style="border-top: 1px solid var(--border-color); padding-top: 15px;">
+                            <label>Apply Promo Coupon</label>
+                            <div class="coupon-input-group">
+                                <input type="text" id="coupon-code-input" placeholder="e.g. FESTIVE15">
+                                <button type="button" class="btn btn-secondary" id="btn-apply-coupon" style="padding: 10px 18px;">Apply</button>
+                            </div>
+                            <div id="coupon-active-container"></div>
+                        </div>
+
+                        <div class="checkout-order-summary" style="border-top: 1px solid var(--border-color); padding-top: 15px;">
+                            <div class="summary-item">
+                                <span>Cart Subtotal</span>
+                                <span>₹<span id="checkout-subtotal">0.00</span></span>
+                            </div>
+                            <div class="summary-item" id="checkout-discount-row" style="display: none; color: var(--accent-green);">
+                                <span>Coupon Savings</span>
+                                <span>-₹<span id="checkout-discount">0.00</span></span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Shipping Fee</span>
+                                <span id="checkout-shipping">FREE</span>
+                            </div>
+                            <div class="summary-item total">
+                                <span>Order Total</span>
+                                <span>₹<span id="checkout-total">0.00</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- VIEW: ORDER SUCCESS & INVOICE -->
+        <section id="view-success" class="page-view" style="display: none;">
+            <div class="success-view">
+                <i class="fa-solid fa-circle-check"></i>
+                <h2>Thank you for your Order!</h2>
+                <p>Your order has been placed successfully. Below is your purchase invoice.</p>
+                
+                <div class="invoice-box" id="invoice-details-content">
+                    <!-- Populated via cart.js -->
+                </div>
+                
+                <button class="btn btn-primary" id="btn-success-back-home" style="margin-top: 30px;">
+                    Continue Shopping
+                </button>
+            </div>
+        </section>
+
+
+        <!-- VIEW: ADMIN DASHBOARD -->
+        <section id="view-admin" class="page-view" style="display: none;">
+            <div class="admin-view">
+                <div class="admin-header">
+                    <h2>Store Management Portal</h2>
+                    <button class="btn btn-secondary" id="btn-admin-add-product">
+                        <i class="fa-solid fa-plus"></i> Add New Utensil
+                    </button>
+                </div>
+                
+                <!-- Stat Cards -->
+                <div class="admin-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+                        <div class="stat-info">
+                            <h4>Total Sales</h4>
+                            <p>₹<span id="admin-revenue">0.00</span></p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-boxes-packing"></i></div>
+                        <div class="stat-info">
+                            <h4>Total Orders</h4>
+                            <p id="admin-orders-count">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                        <div class="stat-info">
+                            <h4>Stock Alerts</h4>
+                            <p id="admin-alerts-count">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-server"></i></div>
+                        <div class="stat-info">
+                            <h4>Server Ram</h4>
+                            <p id="admin-memory-usage">0 MB</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upgraded Sales Trend Line Chart -->
+                <div class="admin-chart-box">
+                    <canvas id="admin-revenue-chart"></canvas>
+                </div>
+
+                <div class="admin-layout-columns">
+                    <!-- Left: Inventory Control -->
+                    <div class="admin-section-box">
+                        <h3>Active Inventory</h3>
+                        <div class="inventory-list" id="admin-inventory-list">
+                            <!-- Populated via admin.js -->
+                        </div>
+                    </div>
+                    
+                    <!-- Right: Orders logs & System stats -->
+                    <div class="admin-section-box">
+                        <h3>Order Log History</h3>
+                        <div class="inventory-list" id="admin-orders-list">
+                            <!-- Populated via admin.js -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SHOPPING CART SLIDE OUT DRAWER -->
+    <div class="cart-drawer" id="shopping-cart-drawer">
+        <div class="cart-drawer-header">
+            <h2>Your Basket</h2>
+            <button class="btn-close-cart" id="cart-close-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        
+        <div class="cart-items-list" id="cart-drawer-items">
+            <!-- Populated via cart.js -->
+        </div>
+        
+        <div class="cart-drawer-footer">
+            <div class="cart-summary-row">
+                <span>Subtotal</span>
+                <span>₹<span id="cart-subtotal-val">0.00</span></span>
+            </div>
+            <div class="cart-summary-row">
+                <span>Delivery Charge</span>
+                <span id="cart-shipping-val">FREE</span>
+            </div>
+            <div class="cart-total-row">
+                <span>Total Amount</span>
+                <span>₹<span id="cart-total-val">0.00</span></span>
+            </div>
+            
+            <button class="btn btn-primary btn-block" id="cart-checkout-btn">Proceed to Checkout <i class="fa-solid fa-credit-card"></i></button>
+        </div>
+    </div>
+
+
+    <!-- MODAL OVERLAY: PRODUCT DETAIL -->
+    <div class="modal-overlay" id="product-detail-modal">
+        <div class="modal-container">
+            <button class="modal-close-btn" id="btn-close-detail-modal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="detail-modal-layout" id="product-detail-layout">
+                <!-- Rendered dynamically via shop.js -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- MODAL OVERLAY: USER AUTHENTICATION -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal-container" style="max-width: 450px;">
+            <button class="modal-close-btn" id="btn-close-auth-modal"><i class="fa-solid fa-xmark"></i></button>
+            
+            <!-- Login Sub-View -->
+            <div class="auth-modal-layout" id="auth-login-box">
+                <h2>Welcome Back</h2>
+                <p>Login to place orders, save items and access dashboard.</p>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" placeholder="e.g. customer@ramdev.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Log In <i class="fa-solid fa-arrow-right-to-bracket"></i></button>
+                </form>
+                <div class="auth-toggle-text">Don't have an account? <span id="btn-toggle-signup">Register here</span></div>
+                <div class="auth-toggle-text" style="margin-top: 10px; font-size: 11px;">
+                    Test Logins: Admin (<code>admin@ramdev.com</code> / <code>admin123</code>)<br>
+                    Customer (<code>customer@ramdev.com</code> / <code>pass123</code>)
+                </div>
+            </div>
+            
+            <!-- Signup Sub-View -->
+            <div class="auth-modal-layout" id="auth-signup-box" style="display: none;">
+                <h2>Create Account</h2>
+                <p>Register as a new customer at Ramdev Super Store.</p>
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email Address</label>
+                        <input type="email" id="signup-email" placeholder="e.g. test@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" minlength="6" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Sign Up <i class="fa-solid fa-user-plus"></i></button>
+                </form>
+                <div class="auth-toggle-text">Already have an account? <span id="btn-toggle-login">Log In</span></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- MODAL OVERLAY: ADMIN EDIT INVENTORY -->
+    <div class="modal-overlay" id="admin-product-modal">
+        <div class="modal-container" style="max-width: 500px;">
+            <button class="modal-close-btn" id="btn-close-admin-product-modal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="auth-modal-layout">
+                <h2 id="admin-product-modal-title">Add New Utensil</h2>
+                <p>Fill out the form below to update the storefront catalog.</p>
+                <form id="admin-product-form">
+                    <input type="hidden" id="admin-prod-id">
+                    <div class="form-group">
+                        <label for="admin-prod-name">Product Name</label>
+                        <input type="text" id="admin-prod-name" placeholder="e.g. Copper Dinner Plate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="admin-prod-category">Category</label>
+                        <select id="admin-prod-category">
+                            <option value="Cookware">Cookware</option>
+                            <option value="Serveware">Serveware</option>
+                            <option value="Dinnerware">Dinnerware</option>
+                            <option value="Cutlery">Cutlery</option>
+                            <option value="Accessories">Accessories</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="admin-prod-material">Material</label>
+                        <select id="admin-prod-material">
+                            <option value="Copper">Copper</option>
+                            <option value="Brass">Brass</option>
+                            <option value="Stainless Steel">Stainless Steel</option>
+                            <option value="Cast Iron">Cast Iron</option>
+                            <option value="Wood">Wood</option>
+                            <option value="Clay">Clay</option>
+                            <option value="Ceramic">Ceramic</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="admin-prod-price">Price (₹)</label>
+                        <input type="number" id="admin-prod-price" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="admin-prod-discount">Discount %</label>
+                        <input type="number" id="admin-prod-discount" min="0" max="99" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="admin-prod-stock">Stock Quantity</label>
+                        <input type="number" id="admin-prod-stock" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="admin-prod-sizes">Sizes / Options (Comma-separated)</label>
+                        <input type="text" id="admin-prod-sizes" placeholder="e.g. 1 Litre, 2 Litre or Small, Medium">
+                    </div>
+                    <div class="form-group">
+                        <label for="admin-prod-image">Image URL</label>
+                        <input type="url" id="admin-prod-image" placeholder="Paste image address URL">
+                    </div>
+                    <div class="form-group">
+                        <label for="admin-prod-desc">Description</label>
+                        <textarea id="admin-prod-desc" rows="3" placeholder="Enter product detailed specifications..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" id="btn-admin-submit">Save Item <i class="fa-solid fa-floppy-disk"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3><i class="fa-solid fa-fire-burner" style="color: var(--accent-gold); margin-right: 8px;"></i> Ramdev Super Store</h3>
+                <p>Authentic and premium kitchenware. Specialize in traditional healthy metals like copper, brass, and seasoned cast iron alongside modern tri-ply cookware.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Our Collections</h3>
+                <ul class="footer-links">
+                    <li><a href="#" class="cat-link" data-cat="Cookware">Kadhai & Pans</a></li>
+                    <li><a href="#" class="cat-link" data-cat="Serveware">Copper Jugs & Cups</a></li>
+                    <li><a href="#" class="cat-link" data-cat="Dinnerware">Brass Thali Sets</a></li>
+                    <li><a href="#" class="cat-link" data-cat="Cutlery">Spoons & Accessories</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact & Store</h3>
+                <p><i class="fa-solid fa-location-dot" style="margin-right: 8px; color: var(--accent-gold);"></i> Main Bazar Road, City Center, India</p>
+                <p style="margin-top: 10px;"><i class="fa-solid fa-phone" style="margin-right: 8px; color: var(--accent-gold);"></i> +91 9876543210</p>
+                <p style="margin-top: 10px;"><i class="fa-solid fa-envelope" style="margin-right: 8px; color: var(--accent-gold);"></i> support@ramdevstore.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Ramdev Super Store. All Rights Reserved. Crafted for Healthy Living.</p>
+            <p>Admin Login: admin@ramdev.com / admin123</p>
+        </div>
+    </footer>
+
+    <!-- Client Script Modules -->
+    <script src="/js/api.js"></script>
+    <script src="/js/cart.js"></script>
+    <script src="/js/shop.js"></script>
+    <script src="/js/admin.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>
