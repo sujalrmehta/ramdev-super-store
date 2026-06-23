@@ -133,6 +133,10 @@ const api = {
         return await this.request('POST', '/api/coupons/apply', { code });
     },
 
+    async chatMessage(message) {
+        return await this.request('POST', '/api/chat', { message });
+    },
+
     // --- Checkout & Orders API ---
     async checkout(shippingInfo, items, couponCode = "") {
         return await this.request('POST', '/api/checkout', { shippingInfo, items, coupon_code: couponCode });
