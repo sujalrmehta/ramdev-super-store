@@ -3574,24 +3574,33 @@ header {
     color: var(--accent-copper);
 }
 
-/* ===== FINAL FIX: Remove any line/bar above product card images ===== */
-.product-card > *:not(.product-image-wrapper):not(.product-info) {
-    display: none !important;
-}
-.product-card .product-image-wrapper {
-    display: block !important;
-    order: 1;
-}
-.product-card .product-info {
-    display: flex !important;
-    order: 2;
-}
-/* Wishlist button stays visible and absolutely positioned */
+/* ===== Wishlist heart button - always visible on product cards ===== */
 .product-card .wishlist-btn {
     display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     position: absolute !important;
     top: 12px !important;
     right: 12px !important;
+    width: 32px !important;
+    height: 32px !important;
+    background: white !important;
+    border-radius: 50% !important;
+    border: none !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15) !important;
+    cursor: pointer !important;
     z-index: 20 !important;
-    order: unset !important;
+    transition: transform 0.2s !important;
+}
+.product-card .wishlist-btn:hover {
+    transform: scale(1.15) !important;
+}
+.product-card .wishlist-btn.active {
+    color: #e91e63 !important;
+}
+.product-card .product-image-wrapper {
+    display: block !important;
+}
+.product-card .product-info {
+    display: flex !important;
 }
