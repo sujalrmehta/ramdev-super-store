@@ -3,6 +3,7 @@ const shop = {
     products: [],
     selectedCategory: "",
     selectedMaterials: [],
+    selectedBenefits: [],
     maxPrice: 5000,
     sortBy: "default",
     searchQuery: "",
@@ -41,23 +42,34 @@ const shop = {
             });
         }
 
-        // Brand/Material Dropdown Filter
-        const matSelect = document.getElementById('filter-materials-select');
-        if (matSelect) {
-            matSelect.addEventListener('change', (e) => {
-                const val = e.target.value;
-                this.selectedMaterials = val ? [val] : [];
+        // Price Slider
+        const priceSlider = document.getElementById('filter-price-slider');
+        const priceDisplay = document.getElementById('price-slider-value');
+        if (priceSlider && priceDisplay) {
+            priceSlider.addEventListener('input', (e) => {
+                priceDisplay.innerText = e.target.value;
+            });
+            priceSlider.addEventListener('change', (e) => {
+                this.maxPrice = parseInt(e.target.value);
                 this.loadProducts();
             });
         }
 
-        // Size Dropdown Filter
-        const sizeSelect = document.getElementById('filter-sizes-select');
-        if (sizeSelect) {
-            sizeSelect.addEventListener('change', () => {
+        // Material Checkboxes
+        document.querySelectorAll('.mat-checkbox').forEach(cb => {
+            cb.addEventListener('change', () => {
+                this.selectedMaterials = Array.from(document.querySelectorAll('.mat-checkbox:checked')).map(el => el.value);
                 this.loadProducts();
             });
-        }
+        });
+
+        // Health Benefit Checkboxes
+        document.querySelectorAll('.ben-checkbox').forEach(cb => {
+            cb.addEventListener('change', () => {
+                this.selectedBenefits = Array.from(document.querySelectorAll('.ben-checkbox:checked')).map(el => el.value);
+                this.loadProducts();
+            });
+        });
 
         // Sort Selector
         const sortSelect = document.getElementById('sort-select');
@@ -107,6 +119,7 @@ const shop = {
     resetFilters() {
         this.selectedCategory = "";
         this.selectedMaterials = [];
+        this.selectedBenefits = [];
         this.maxPrice = 5000;
         this.sortBy = "default";
         this.searchQuery = "";
@@ -130,12 +143,8 @@ const shop = {
             });
         }
 
-        const matContainer = document.getElementById('filter-materials');
-        if (matContainer) {
-            matContainer.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-                cb.checked = false;
-            });
-        }
+        document.querySelectorAll('.mat-checkbox').forEach(cb => cb.checked = false);
+        document.querySelectorAll('.ben-checkbox').forEach(cb => cb.checked = false);
 
         this.loadProducts();
     },
@@ -152,13 +161,11 @@ const shop = {
 
             let productsList = await api.getProducts(filters);
             
-            // Apply size filter in frontend if selected
-            const sizeSelect = document.getElementById('filter-sizes-select');
-            if (sizeSelect && sizeSelect.value) {
-                const sizeVal = sizeSelect.value.toLowerCase();
+            // Frontend filter for health benefits
+            if (this.selectedBenefits && this.selectedBenefits.length > 0) {
                 productsList = productsList.filter(p => {
-                    if (!p.sizes) return false;
-                    return p.sizes.toLowerCase().includes(sizeVal);
+                    const desc = p.description.toLowerCase();
+                    return this.selectedBenefits.some(b => desc.includes(b.toLowerCase()));
                 });
             }
 
@@ -204,8 +211,6 @@ const shop = {
 
             return `
                 <div class="product-card">
-                    ${product.discount_pct > 0 ? `<div class="product-badge">${product.discount_pct}% OFF</div>` : ''}
-                    <div class="product-category-badge">${product.category}</div>
                     <button class="wishlist-btn ${wishlist.isFavorite(product.id) ? 'active' : ''}" data-id="${product.id}" onclick="wishlist.toggle(${product.id})" style="position:absolute; top:12px; right:12px; background:white; border-radius:50%; width:32px; height:32px; border:none; box-shadow:0 2px 5px rgba(0,0,0,0.1); cursor:pointer; z-index:10; color:${wishlist.isFavorite(product.id) ? '#e91e63' : 'var(--text-muted)'}; transition:all 0.2s;">
                         ${wishlist.isFavorite(product.id) ? '<i class="fa-solid fa-heart"></i>' : '<i class="fa-regular fa-heart"></i>'}
                     </button>
