@@ -919,6 +919,81 @@ ${order.shipping_address}
             this.showToast(err.message || 'Error creating order.', 'error');
         }
     }
+
+    // --- Bilingual Voice Search Controller ---
+    recognition: null,
+
+    startVoiceSearch() {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            this.showToast(this.currentLanguage === 'hi' ? 'आपका ब्राउज़र वॉयस सर्च का समर्थन नहीं करता है।' : 'Your browser does not support Voice Search.', 'error');
+            return;
+        }
+
+        const overlay = document.getElementById('voice-modal-overlay');
+        const statusText = document.getElementById('voice-status-text');
+        const instructionText = document.getElementById('voice-instructions-text');
+        if (!overlay || !statusText || !instructionText) return;
+
+        statusText.innerText = this.currentLanguage === 'hi' ? 'सुन रहा हूँ...' : 'Listening...';
+        instructionText.innerText = this.currentLanguage === 'hi' ? 'बोलिए (जैसे: पीतल की थाली या तांबे की बोतल)' : 'Speak now (e.g. Brass Plate or Copper Jug)';
+        overlay.classList.add('active');
+
+        this.recognition = new SpeechRecognition();
+        this.recognition.lang = this.currentLanguage === 'hi' ? 'hi-IN' : 'en-IN';
+        this.recognition.interimResults = false;
+        this.recognition.maxAlternatives = 1;
+
+        this.recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            console.log(`Speech recognized: ${transcript}`);
+            statusText.innerText = this.currentLanguage === 'hi' ? `पहचाना गया: "${transcript}"` : `Recognized: "${transcript}"`;
+            
+            // Put transcript in search input and trigger search
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.value = transcript;
+                searchInput.dispatchEvent(new Event('input'));
+                
+                // If shop.js handles search filtering:
+                if (typeof shop !== 'undefined' && typeof shop.handleSearch === 'function') {
+                    shop.handleSearch(transcript);
+                } else if (typeof shop !== 'undefined') {
+                    // Fallback search trigger
+                    shop.searchQuery = transcript;
+                    shop.renderCatalog();
+                }
+            }
+
+            setTimeout(() => {
+                this.stopVoiceSearch();
+            }, 1000);
+        };
+
+        this.recognition.onerror = (event) => {
+            console.error('Speech recognition error:', event.error);
+            statusText.innerText = this.currentLanguage === 'hi' ? 'त्रुटि! फिर से कोशिश करें।' : 'Error! Try speaking again.';
+            setTimeout(() => {
+                this.stopVoiceSearch();
+            }, 1500);
+        };
+
+        this.recognition.onend = () => {
+            this.recognition = null;
+        };
+
+        this.recognition.start();
+    },
+
+    stopVoiceSearch() {
+        const overlay = document.getElementById('voice-modal-overlay');
+        if (overlay) overlay.classList.remove('active');
+
+        if (this.recognition) {
+            this.recognition.abort();
+            this.recognition = null;
+        }
+    }
 };
 
 window.addEventListener('DOMContentLoaded', () => {
