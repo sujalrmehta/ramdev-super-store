@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ramdev-store-v1';
+const CACHE_NAME = 'ramdev-store-v4';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
