@@ -1,4 +1,58 @@
 // app.js - SPA Router, UI State, and Global Orchestrator
+
+const TRANSLATIONS = {
+    en: {
+        hero1_title: "Royal Golden Brass Dinnerware",
+        hero1_desc: "Experience traditional wellness and royal elegance with our handcrafted Ayurvedic brass plates, bowls, and glasses.",
+        hero2_title: "Pure Hammered Copper Vessels",
+        hero2_desc: "Boost your daily immunity and digestion. Storing water in copper is a time-tested Ayurvedic wellness practice.",
+        hero3_title: "Pre-Seasoned Cast Iron Woks",
+        hero3_desc: "Traditional hand-cast iron kadhais and skillets. Infuses your recipes with dietary iron naturally.",
+        shop_now: "Shop Collection",
+        crafts_title: "Artisanal Heritage of India",
+        crafts_desc: "Handcrafted with love by traditional master artisans across regional India",
+        craft1_title: "Moradabad Brass Craft",
+        craft1_desc: "Sourced from Uttar Pradesh's famous 'Peetal Nagri'. Hammered and polished by hand using generation-old sand casting techniques.",
+        craft2_title: "Ayurvedic Hammered Copper",
+        craft2_desc: "Crafted by Maharashtra's traditional copper-smiths. Hammered textures maximize surface contact to purify drinking water.",
+        craft3_title: "Sinnamani Cast Iron",
+        craft3_desc: "Traditional heavy kadhais sand-cast in Tamil Nadu. Double organic pre-seasoning with sesame oil for a non-stick finish.",
+        upi_payment: "UPI Payment",
+        upi_instructions: "Scan this QR code using Google Pay, PhonePe, Paytm or BHIM UPI to complete payment.",
+        simulate_success: "Simulate Payment Success",
+        all_products: "All Products"
+    },
+    hi: {
+        hero1_title: "शाही सुनहरे पीतल के बर्तन",
+        hero1_desc: "हमारे हस्तनिर्मित आयुर्वेदिक पीतल की थाली, कटोरी और गिलास के साथ पारंपरिक कल्याण और शाही लालित्य का अनुभव करें।",
+        hero2_title: "शुद्ध तांबे के बर्तन",
+        hero2_desc: "अपनी दैनिक प्रतिरक्षा और पाचन को बढ़ावा दें। तांबे में पानी का संग्रहण एक समय-परीक्षित आयुर्वेदिक स्वास्थ्य अभ्यास है।",
+        hero3_title: "कास्ट आयरन कड़ाही",
+        hero3_desc: "पारंपरिक हाथ से बनी लोहे की कड़ाही। प्राकृतिक रूप से आपके भोजन में आयरन की मात्रा बढ़ाए।",
+        shop_now: "अभी खरीदें",
+        crafts_title: "भारत की हस्तशिल्प विरासत",
+        crafts_desc: "क्षेत्रीय भारत के पारंपरिक कारीगरों द्वारा हस्तनिर्मित",
+        craft1_title: "मुरादाबाद पीतल शिल्प",
+        craft1_desc: "उत्तर प्रदेश की प्रसिद्ध 'पीतल नगरी' से लाया गया। पारंपरिक रेत ढलाई तकनीकों का उपयोग करके हाथ से बनाया गया।",
+        craft2_title: "आयुर्वेदिक तांबा",
+        craft2_desc: "महाराष्ट्र के तांबे के कारीगरों द्वारा निर्मित। पानी को शुद्ध करने के लिए हाथ से बनाई गई तांबे की बनावट।",
+        craft3_title: "चिन्नामणी कास्ट आयरन",
+        craft3_desc: "तमिलनाडु में निर्मित पारंपरिक भारी लोहे की कड़ाही। चिपचिपा-मुक्त बनाने के लिए तिल के तेल से जैविक पॉलिश।",
+        upi_payment: "यूपीआई भुगतान",
+        upi_instructions: "भुगतान पूरा करने के लिए Google Pay, PhonePe, Paytm या BHIM UPI का उपयोग करके इस QR कोड को स्कैन करें।",
+        simulate_success: "सफल भुगतान का अनुकरण करें",
+        all_products: "सभी उत्पाद"
+    }
+};
+
+const HEALTH_BENEFITS = {
+    "Copper": "<h3>Ayurvedic Health Benefits of Copper:</h3><ul><li><strong>Aids Digestion:</strong> Storing water in copper bottom handi or jugs overnight cleanses the stomach.</li><li><strong>Strengthens Immunity:</strong> Copper has natural anti-microbial and anti-inflammatory properties.</li><li><strong>Promotes Bone Strength:</strong> Copper is essential for melanin production and absorption of iron.</li></ul>",
+    "Brass": "<h3>Ayurvedic Health Benefits of Brass (Peetal):</h3><ul><li><strong>Nutritional Value:</strong> Brass retains up to 70% of food nutrients during cooking.</li><li><strong>Melanin Regulation:</strong> Helps maintain healthy skin and hair pigment.</li><li><strong>Pacifies Pitta:</strong> Traditional brass dinnerware is recommended to balance body humors.</li></ul>",
+    "Cast Iron": "<h3>Health Benefits of Cast Iron Cookware:</h3><ul><li><strong>Natural Iron Infusion:</strong> Infuses dietary iron into slow-cooked gravies and dishes.</li><li><strong>Sesame Seasoning:</strong> Completely organic and chemical-free, unlike Teflon coatings.</li><li><strong>Uniform Heating:</strong> Retains heat longer, requiring less oil for cooking.</li></ul>",
+    "Stainless Steel": "<h3>Benefits of Tri-Ply Stainless Steel:</h3><ul><li><strong>Non-Reactive Cooking:</strong> Does not react with acidic foods like tomatoes or vinegar.</li><li><strong>Eco-Friendly & Durable:</strong> 100% rustproof and lasts for generations.</li><li><strong>Fast Heat Transfer:</strong> Multi-layered core saves cooking gas and electricity.</li></ul>",
+    "Clay": "<h3>Ayurvedic Health Benefits of Earthenware/Clay:</h3><ul><li><strong>Alkalizes Food:</strong> Alkaline clay neutralizes acidic values in food.</li><li><strong>Retains Moisture:</strong> Micro-pores allow steam condensation, keeping food tender.</li><li><strong>Pure Organic Composition:</strong> Free from lead and toxic chemical glazes.</li></ul>"
+};
+
 const app = {
     currentView: "home",
     user: null,
@@ -12,6 +66,8 @@ const app = {
         this.renderUserArea();
         this.setupCheckoutForm();
         this.setupHamburgerDrawer();
+        this.initCarousel();
+        this.initLanguage();
     },
 
     // --- View Router ---
@@ -540,6 +596,18 @@ const app = {
         };
 
         const couponCode = cart.appliedCoupon ? cart.appliedCoupon.code : "";
+        const total = cart.getTotal();
+
+        if (shippingInfo.payment_method === 'UPI Pay') {
+            // Save checkout data for after payment completes
+            this._pendingCheckoutData = {
+                shippingInfo,
+                items: cart.getItems(),
+                couponCode
+            };
+            this.openUpiModal(total);
+            return;
+        }
 
         try {
             const order = await api.checkout(shippingInfo, cart.getItems(), couponCode);
@@ -665,15 +733,191 @@ ${order.shipping_address}
         container.appendChild(toast);
 
         setTimeout(() => {
-            toast.classList.add('show');
-        }, 50);
-
-        setTimeout(() => {
             toast.classList.remove('show');
             setTimeout(() => {
                 toast.remove();
             }, 300);
         }, 4000);
+    },
+
+    // --- Carousel Controller ---
+    carouselIndex: 0,
+    carouselInterval: null,
+
+    initCarousel() {
+        this.startCarouselAutoplay();
+    },
+
+    startCarouselAutoplay() {
+        if (this.carouselInterval) clearInterval(this.carouselInterval);
+        this.carouselInterval = setInterval(() => {
+            this.moveCarousel(1);
+        }, 5000);
+    },
+
+    moveCarousel(direction) {
+        const items = document.querySelectorAll('.hero-carousel .carousel-item');
+        const dots = document.querySelectorAll('.hero-carousel .carousel-dot');
+        if (!items.length) return;
+
+        items[this.carouselIndex].classList.remove('active');
+        if (dots[this.carouselIndex]) dots[this.carouselIndex].classList.remove('active');
+
+        this.carouselIndex = (this.carouselIndex + direction + items.length) % items.length;
+
+        items[this.carouselIndex].classList.add('active');
+        if (dots[this.carouselIndex]) dots[this.carouselIndex].classList.add('active');
+        
+        this.startCarouselAutoplay(); // Reset timer
+    },
+
+    setCarouselSlide(index) {
+        const items = document.querySelectorAll('.hero-carousel .carousel-item');
+        const dots = document.querySelectorAll('.hero-carousel .carousel-dot');
+        if (!items.length || index < 0 || index >= items.length) return;
+
+        items[this.carouselIndex].classList.remove('active');
+        if (dots[this.carouselIndex]) dots[this.carouselIndex].classList.remove('active');
+
+        this.carouselIndex = index;
+
+        items[this.carouselIndex].classList.add('active');
+        if (dots[this.carouselIndex]) dots[this.carouselIndex].classList.add('active');
+
+        this.startCarouselAutoplay(); // Reset timer
+    },
+
+    scrollToCatalog() {
+        const catalogEl = document.getElementById('categories-list');
+        if (catalogEl) {
+            catalogEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    },
+
+    // --- Language Translation System ---
+    currentLanguage: 'en',
+
+    initLanguage() {
+        const savedLang = localStorage.getItem('ramdev_language') || 'en';
+        this.currentLanguage = savedLang;
+        const selector = document.getElementById('lang-select');
+        if (selector) selector.value = savedLang;
+        this.translatePage();
+    },
+
+    changeLanguage(lang) {
+        this.currentLanguage = lang;
+        localStorage.setItem('ramdev_language', lang);
+        this.translatePage();
+        // Re-render catalog to translate category tabs
+        if (typeof shop !== 'undefined' && typeof shop.renderCatalog === 'function') {
+            shop.renderCatalog();
+        }
+    },
+
+    translatePage() {
+        const dict = TRANSLATIONS[this.currentLanguage];
+        if (!dict) return;
+
+        document.querySelectorAll('[data-translate]').forEach(el => {
+            const key = el.getAttribute('data-translate');
+            if (dict[key]) {
+                el.innerText = dict[key];
+            }
+        });
+    },
+
+    // --- Pincode Estimator Logic ---
+    checkPincode(productId) {
+        const input = document.getElementById(`pincode-input-${productId}`);
+        const feedback = document.getElementById(`pincode-feedback-${productId}`);
+        if (!input || !feedback) return;
+
+        const pin = input.value.trim();
+        if (!/^\d{6}$/.test(pin)) {
+            feedback.style.color = '#EF4444';
+            feedback.innerText = this.currentLanguage === 'hi' ? 'कृपया 6 अंकों का वैध पिनकोड दर्ज करें।' : 'Please enter a valid 6-digit Pincode.';
+            return;
+        }
+
+        const firstDigit = pin[0];
+        let days = 3;
+        if (firstDigit === '1' || firstDigit === '2') {
+            days = 2; // North India
+        } else if (firstDigit === '3' || firstDigit === '4') {
+            days = 3; // West India
+        } else if (firstDigit === '5' || firstDigit === '6') {
+            days = 2; // South India
+        } else {
+            days = 4; // East / North-East / Central
+        }
+
+        feedback.style.color = 'var(--accent-green)';
+        feedback.innerText = this.currentLanguage === 'hi' ? 
+            `पिनकोड ${pin} पर डिलीवरी: ${days} दिनों में (फ्री शिपिंग)` : 
+            `Delivering to ${pin} in ${days} Days (FREE Shipping)`;
+    },
+
+    // --- Health Benefits Modal ---
+    openHealthModal(material) {
+        const overlay = document.getElementById('health-modal-overlay');
+        const title = document.getElementById('health-modal-title');
+        const content = document.getElementById('health-modal-content');
+        if (!overlay || !title || !content) return;
+
+        const details = HEALTH_BENEFITS[material] || "<h3>Health benefits guide:</h3><p>Traditional cookware enhances natural wellness.</p>";
+        title.innerHTML = `<i class="fa-solid fa-heart-pulse"></i> ${material} Ayurveda Guide`;
+        content.innerHTML = details;
+        overlay.classList.add('active');
+    },
+
+    closeHealthModal() {
+        const overlay = document.getElementById('health-modal-overlay');
+        if (overlay) overlay.classList.remove('active');
+    },
+
+    // --- UPI QR Code Modal ---
+    openUpiModal(amount) {
+        const overlay = document.getElementById('upi-modal-overlay');
+        const amtSpan = document.getElementById('upi-modal-amount');
+        const qrImg = document.getElementById('upi-qr-img');
+        if (!overlay || !amtSpan || !qrImg) return;
+
+        amtSpan.innerText = amount.toFixed(2);
+        
+        const upiUrl = `upi://pay?pa=ramdevstore@ybl%26pn=Ramdev%2520Super%2520Store%26am=${amount.toFixed(2)}%26cu=INR`;
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
+
+        overlay.classList.add('active');
+    },
+
+    closeUpiModal() {
+        const overlay = document.getElementById('upi-modal-overlay');
+        if (overlay) overlay.classList.remove('active');
+    },
+
+    simulateUpiSuccess() {
+        this.closeUpiModal();
+        this.showToast(this.currentLanguage === 'hi' ? 'यूपीआई भुगतान सफल रहा!' : 'UPI Payment Simulated Successfully!');
+        
+        if (this._pendingCheckoutData) {
+            const { shippingInfo, items, couponCode } = this._pendingCheckoutData;
+            this.submitOrderAfterPayment(shippingInfo, items, couponCode);
+        }
+    },
+
+    async submitOrderAfterPayment(shippingInfo, items, couponCode) {
+        try {
+            const order = await api.checkout(shippingInfo, items, couponCode);
+            this.showToast("Order placed successfully!", "success");
+            
+            this.renderInvoiceReceipt(order);
+            cart.clear();
+            this.showView('success');
+            this._pendingCheckoutData = null;
+        } catch (err) {
+            this.showToast(err.message || 'Error creating order.', 'error');
+        }
     }
 };
 
