@@ -176,8 +176,9 @@ const cart = {
         `).join('');
 
         const subtotal = this.getSubtotal();
+        const total = this.getTotal();
         document.getElementById('cart-subtotal-val').innerText = subtotal.toFixed(2);
-        document.getElementById('cart-total-val').innerText = subtotal.toFixed(2);
+        document.getElementById('cart-total-val').innerText = total.toFixed(2);
     },
 
     renderCheckoutSummary() {
@@ -221,6 +222,19 @@ const cart = {
         }
 
         if (totalSpan) totalSpan.innerText = total.toFixed(2);
+    },
+
+    applyShareCoupon() {
+        this.appliedCoupon = {
+            code: "SHARE5",
+            type: "percentage",
+            value: 5,
+            description: "WhatsApp Sharing Reward (5% OFF)"
+        };
+        this.save();
+        this.render();
+        this.renderCheckoutSummary();
+        app.showToast(app.currentLanguage === 'hi' ? 'व्हाट्सएप साझा करने के लिए धन्यवाद! 5% की छूट लागू हो गई है।' : 'Thanks for sharing! 5% Discount has been applied.', 'success');
     }
 };
 
