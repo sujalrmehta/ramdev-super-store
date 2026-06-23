@@ -40,6 +40,11 @@ const INITIAL_PRODUCTS = [
         discount_pct: 10,
         stock: 15,
         image_url: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?q=80&w=600&auto=format&fit=crop",
+        gallery: [
+            "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?q=80&w=600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1596797882943-1911744b4104?q=80&w=600&auto=format&fit=crop"
+        ],
         category: "Dinnerware",
         material: "Brass",
         sizes: "Standard",
@@ -54,6 +59,11 @@ const INITIAL_PRODUCTS = [
         discount_pct: 15,
         stock: 35,
         image_url: "https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?q=80&w=600&auto=format&fit=crop",
+        gallery: [
+            "https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?q=80&w=600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1596797882943-1911744b4104?q=80&w=600&auto=format&fit=crop"
+        ],
         category: "Serveware",
         material: "Copper",
         sizes: "1.5 Litre Jug",
@@ -68,6 +78,11 @@ const INITIAL_PRODUCTS = [
         discount_pct: 20,
         stock: 5,
         image_url: "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?q=80&w=600&auto=format&fit=crop",
+        gallery: [
+            "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?q=80&w=600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1596797882943-1911744b4104?q=80&w=600&auto=format&fit=crop"
+        ],
         category: "Cookware",
         material: "Cast Iron",
         sizes: "2.5 Litre, 4 Litre",
@@ -82,6 +97,11 @@ const INITIAL_PRODUCTS = [
         discount_pct: 5,
         stock: 22,
         image_url: "https://images.unsplash.com/photo-1596797882943-1911744b4104?q=80&w=600&auto=format&fit=crop",
+        gallery: [
+            "https://images.unsplash.com/photo-1596797882943-1911744b4104?q=80&w=600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1596797882943-1911744b4104?q=80&w=600&auto=format&fit=crop"
+        ],
         category: "Cookware",
         material: "Stainless Steel",
         sizes: "3 Litre, 5 Litre",
@@ -96,6 +116,11 @@ const INITIAL_PRODUCTS = [
         discount_pct: 25,
         stock: 40,
         image_url: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?q=80&w=600&auto=format&fit=crop",
+        gallery: [
+            "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?q=80&w=600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1596797882943-1911744b4104?q=80&w=600&auto=format&fit=crop"
+        ],
         category: "Cookware",
         material: "Copper",
         sizes: "Small/Medium/Large Set",
@@ -110,6 +135,11 @@ const INITIAL_PRODUCTS = [
         discount_pct: 12,
         stock: 18,
         image_url: "https://images.unsplash.com/photo-1593618998160-e34014e67546?q=80&w=600&auto=format&fit=crop",
+        gallery: [
+            "https://images.unsplash.com/photo-1593618998160-e34014e67546?q=80&w=600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1596797882943-1911744b4104?q=80&w=600&auto=format&fit=crop"
+        ],
         category: "Cutlery",
         material: "Stainless Steel",
         sizes: "Set of 4",
@@ -124,6 +154,11 @@ const INITIAL_PRODUCTS = [
         discount_pct: 0,
         stock: 60,
         image_url: "https://images.unsplash.com/photo-1581683705068-ca8f49fc7f45?q=80&w=600&auto=format&fit=crop",
+        gallery: [
+            "https://images.unsplash.com/photo-1581683705068-ca8f49fc7f45?q=80&w=600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1596797882943-1911744b4104?q=80&w=600&auto=format&fit=crop"
+        ],
         category: "Accessories",
         material: "Wood",
         sizes: "Set of 5",
@@ -138,6 +173,11 @@ const INITIAL_PRODUCTS = [
         discount_pct: 15,
         stock: 12,
         image_url: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=600&auto=format&fit=crop",
+        gallery: [
+            "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1596797882943-1911744b4104?q=80&w=600&auto=format&fit=crop"
+        ],
         category: "Cookware",
         material: "Clay",
         sizes: "2 Litre",
@@ -152,6 +192,11 @@ const INITIAL_PRODUCTS = [
         discount_pct: 8,
         stock: 25,
         image_url: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=600&auto=format&fit=crop",
+        gallery: [
+            "https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1596797882943-1911744b4104?q=80&w=600&auto=format&fit=crop"
+        ],
         category: "Dinnerware",
         material: "Ceramic",
         sizes: "Set of 4",
@@ -166,6 +211,11 @@ const INITIAL_PRODUCTS = [
         discount_pct: 10,
         stock: 0,
         image_url: "https://images.unsplash.com/photo-1534939561126-855b8675edd7?q=80&w=600&auto=format&fit=crop",
+        gallery: [
+            "https://images.unsplash.com/photo-1534939561126-855b8675edd7?q=80&w=600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1596797882943-1911744b4104?q=80&w=600&auto=format&fit=crop"
+        ],
         category: "Accessories",
         material: "Stainless Steel",
         sizes: "3-Tier",
@@ -177,9 +227,9 @@ const INITIAL_PRODUCTS = [
 const INITIAL_USERS = [
     {
         id: 1,
-        name: "Ramdev Store Admin",
-        email: "admin@ramdev.com",
-        password: "admin123",
+        name: "Rakesh Kumar",
+        email: "rakeshcmehta2107@gmail.com",
+        password: "rakesh@2107",
         role: "admin",
         created_at: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
     },
