@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "product_id": 1,
+    "name": "Suresh Patel",
+    "rating": 5,
+    "comment": "Eating on this brass thali feels incredibly premium. It has a heavy, solid construction, and classic appearance.",
+    "created_at": "2026-06-05T05:36:31.462Z"
+  },
+  {
+    "id": 2,
+    "product_id": 1,
+    "name": "Ananya Iyer",
+    "rating": 4,
+    "comment": "Very elegant brass plate. Takes some care to clean (need pitambari or lemon), but beautiful ayurvedic addition to our dining table.",
+    "created_at": "2026-06-07T05:36:31.462Z"
+  },
+  {
+    "id": 3,
+    "product_id": 2,
+    "name": "Vikram Malhotra",
+    "rating": 5,
+    "comment": "Excellent pure copper jug. Drinking stored copper water has solved my acidity. Strongly recommended!",
+    "created_at": "2026-06-08T05:36:31.462Z"
+  },
+  {
+    "id": 4,
+    "product_id": 3,
+    "name": "Rajesh Sen",
+    "rating": 5,
+    "comment": "Authentic heavy cast iron wok. Cooked dry potato curry in it, it adds amazing taste and nutritional values.",
+    "created_at": "2026-06-06T05:36:31.462Z"
+  },
+  {
+    "id": 5,
+    "product_id": 4,
+    "name": "Test Reviewer",
+    "rating": 5,
+    "comment": "Fabulous pressure cooker! Whistle works nicely.",
+    "created_at": "2026-06-11T05:36:31.474Z"
+  },
+  {
+    "id": 6,
+    "product_id": 11,
+    "name": "Test Reviewer",
+    "rating": 4,
+    "comment": "Decent item.",
+    "created_at": "2026-06-11T05:36:41.547Z"
+  },
+  {
+    "id": 7,
+    "product_id": 11,
+    "name": "Another Reviewer",
+    "rating": 5,
+    "comment": "Fabulous!",
+    "created_at": "2026-06-11T05:36:41.558Z"
+  },
+  {
+    "id": 8,
+    "product_id": 12,
+    "name": "Test Reviewer",
+    "rating": 4,
+    "comment": "Decent item.",
+    "created_at": "2026-06-11T06:46:18.444Z"
+  },
+  {
+    "id": 9,
+    "product_id": 12,
+    "name": "Another Reviewer",
+    "rating": 5,
+    "comment": "Fabulous!",
+    "created_at": "2026-06-11T06:46:18.456Z"
+  }
+]
