@@ -146,6 +146,43 @@ const admin = {
             console.error(err);
         }
     },
+    async exportOrdersToCSV() {
+        try {
+            const orders = await api.getOrders();
+            if (!orders || orders.length === 0) {
+                app.showToast("No orders available to export.", "error");
+                return;
+            }
+
+            // CSV Header
+            let csvContent = "Order ID,Date,User ID,Customer Name,Shipping Address,Total Amount (INR),Status\n";
+
+            // CSV Rows
+            orders.forEach(order => {
+                const dateStr = new Date(order.order_date).toLocaleString();
+                // Escape commas and quotes in text fields
+                const name = `"${order.shipping_name.replace(/"/g, '""')}"`;
+                const address = `"${order.shipping_address.replace(/"/g, '""')}"`;
+                
+                csvContent += `${order.id},"${dateStr}",${order.user_id},${name},${address},${order.total_amount.toFixed(2)},${order.status}\n`;
+            });
+
+            // Trigger download
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", `Ramdev_Orders_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            app.showToast("CSV Downloaded Successfully!", "success");
+        } catch (err) {
+            console.error(err);
+            app.showToast("Failed to generate CSV export.", "error");
+        }
+    },
 
     renderInventory() {
         const container = document.getElementById('admin-inventory-list');
