@@ -3225,6 +3225,8 @@ header {
     font-size: 32px;
     margin: 0 auto 20px;
     position: relative;
+}
+.voice-modal-overlay.active .voice-pulse-circle {
     animation: voicePulse 1.5s infinite ease-in-out;
 }
 @keyframes voicePulse {
