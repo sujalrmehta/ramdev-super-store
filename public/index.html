@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ramdev Super Store | Premium Kitchen Utensils & Cookware</title>
+    <!-- Web App Manifest for PWA -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#d84315">
+    <link rel="apple-touch-icon" href="https://img.icons8.com/color/192/000000/kitchen.png">
+    
     <!-- CSS stylesheet link -->
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.css?v=2">
     <!-- FontAwesome Icons CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Chart.js CDN for Admin dashboard analytics -->
@@ -15,6 +20,12 @@
 
     <!-- Header Navigation -->
     <header>
+        <!-- Top Utility Bar -->
+        <div class="top-utility-bar" style="background: var(--primary-bronze); color: white; padding: 6px 20px; display: flex; justify-content: flex-end; align-items: center; font-size: 12px; gap: 15px;">
+            <a href="#" id="theme-toggle-btn" title="Toggle Theme" style="color: var(--accent-gold); text-decoration: none; display: flex; align-items: center; gap: 6px;" onclick="event.preventDefault();">
+                <i class="fa-solid fa-moon"></i> <span>Theme</span>
+            </a>
+        </div>
         <div class="nav-container">
             <a href="#" class="logo" id="nav-logo">
                 RAMDEV STORE
@@ -35,7 +46,7 @@
                         <option value="hi">हिन्दी (Hindi)</option>
                     </select>
                 </div>
-                
+
                 <a href="#" class="nav-action-icon" id="admin-portal-btn" title="Store Registry" onclick="event.preventDefault(); document.getElementById('left-hamburger-btn') && document.getElementById('left-hamburger-btn').click();">
                     <i class="fa-regular fa-clipboard"></i>
                 </a>
@@ -257,6 +268,13 @@
                         <!-- Populated dynamically via app.js -->
                     </div>
                 </div>
+
+                <div class="admin-section-box" style="margin-top: 30px;">
+                    <h3>My Wishlist ❤️</h3>
+                    <div class="dashboard-wishlist-grid" id="dashboard-wishlist-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                        <!-- Populated dynamically via wishlist.js -->
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -358,9 +376,14 @@
             <div class="admin-view">
                 <div class="admin-header">
                     <h2>Store Management Portal</h2>
-                    <button class="btn btn-secondary" id="btn-admin-add-product">
-                        <i class="fa-solid fa-plus"></i> Add New Utensil
-                    </button>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-secondary" id="btn-admin-export-csv" onclick="admin.exportOrdersToCSV()">
+                            <i class="fa-solid fa-file-csv"></i> Export to CSV
+                        </button>
+                        <button class="btn btn-secondary" id="btn-admin-add-product">
+                            <i class="fa-solid fa-plus"></i> Add New Utensil
+                        </button>
+                    </div>
                 </div>
                 
                 <!-- Stat Cards -->
@@ -473,8 +496,8 @@
                 <p>Login to place orders, save items and access dashboard.</p>
                 <form id="login-form">
                     <div class="form-group">
-                        <label for="login-email">Email Address</label>
-                        <input type="email" id="login-email" placeholder="e.g. customer@ramdev.com" required>
+                        <label for="login-email">Username / Email</label>
+                        <input type="text" id="login-email" placeholder="e.g. customer@ramdev.com or username" required>
                     </div>
                     <div class="form-group">
                         <label for="login-password">Password</label>
@@ -484,7 +507,7 @@
                 </form>
                 <div class="auth-toggle-text">Don't have an account? <span id="btn-toggle-signup">Register here</span></div>
                 <div class="auth-toggle-text" style="margin-top: 10px; font-size: 11px;">
-                    Test Logins: Admin (<code>admin@ramdev.com</code> / <code>admin123</code>)<br>
+                    Test Logins: Admin (<code>rakeshcmehta2107@gmail.com</code> / <code>rakesh@2107</code>)<br>
                     Customer (<code>customer@ramdev.com</code> / <code>pass123</code>)
                 </div>
             </div>
@@ -637,10 +660,35 @@
         </div>
     </div>
 
-    <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/919999999999?text=Hello%20Ramdev%20Store,%20I%20have%20an%20inquiry%20about%20your%20products." class="whatsapp-float" target="_blank" title="Chat on WhatsApp">
+    <!-- WhatsApp Floating Button & Chat Widget -->
+    <a href="#" class="whatsapp-float" id="whatsapp-float-btn" title="Chat with AI Assistant">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
+
+    <div class="ai-chat-widget" id="ai-chat-widget">
+        <div class="ai-chat-header">
+            <div class="ai-chat-header-info">
+                <i class="fa-brands fa-whatsapp"></i>
+                <div class="ai-chat-title">
+                    <h4>Ramdev Assistant</h4>
+                    <span>Typically replies instantly</span>
+                </div>
+            </div>
+            <button class="ai-chat-close" id="ai-chat-close">&times;</button>
+        </div>
+        <div class="ai-chat-body" id="ai-chat-body">
+            <div class="chat-msg bot-msg">
+                <div class="msg-content">
+                    Namaste! 🙏 I am the Ramdev AI Assistant. How can I help you today?
+                    <span class="msg-time">Just now</span>
+                </div>
+            </div>
+        </div>
+        <div class="ai-chat-footer">
+            <input type="text" class="ai-chat-input" id="ai-chat-input" placeholder="Type a message...">
+            <button class="ai-chat-send" id="ai-chat-send"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
 
     <!-- VOICE SEARCH LISTENING MODAL -->
     <div class="voice-modal-overlay" id="voice-modal-overlay">
@@ -655,10 +703,25 @@
     </div>
 
     <!-- Client Script Modules -->
-    <script src="/js/api.js"></script>
-    <script src="/js/cart.js"></script>
-    <script src="/js/shop.js"></script>
-    <script src="/js/admin.js"></script>
-    <script src="/js/app.js"></script>
+    <script src="/js/api.js?v=2"></script>
+    <script src="/js/cart.js?v=2"></script>
+    <script src="/js/shop.js?v=2"></script>
+    <script src="/js/wishlist.js?v=2"></script>
+    <script src="/js/admin.js?v=2"></script>
+    <script src="/js/app.js?v=2"></script>
+    <script src="/js/ai-chat.js?v=2"></script>
+    
+    <!-- PWA Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('SW registered: ', registration);
+                }).catch(registrationError => {
+                    console.log('SW registration failed: ', registrationError);
+                });
+            });
+        }
+    </script>
 </body>
 </html>
