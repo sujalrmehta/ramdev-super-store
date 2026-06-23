@@ -206,6 +206,9 @@ const shop = {
                 <div class="product-card">
                     ${product.discount_pct > 0 ? `<div class="product-badge">${product.discount_pct}% OFF</div>` : ''}
                     <div class="product-category-badge">${product.category}</div>
+                    <button class="wishlist-btn ${wishlist.isFavorite(product.id) ? 'active' : ''}" data-id="${product.id}" onclick="wishlist.toggle(${product.id})" style="position:absolute; top:12px; right:12px; background:white; border-radius:50%; width:32px; height:32px; border:none; box-shadow:0 2px 5px rgba(0,0,0,0.1); cursor:pointer; z-index:10; color:${wishlist.isFavorite(product.id) ? '#e91e63' : 'var(--text-muted)'}; transition:all 0.2s;">
+                        ${wishlist.isFavorite(product.id) ? '<i class="fa-solid fa-heart"></i>' : '<i class="fa-regular fa-heart"></i>'}
+                    </button>
                     
                     <div class="product-image-wrapper" onclick="shop.openProductDetail(${product.id})">
                         <img src="${product.image_url}" alt="${product.name}" onerror="this.src='https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?q=80&w=600&auto=format&fit=crop'">
@@ -287,9 +290,21 @@ const shop = {
                 stockBadge = `<span class="detail-stock-status in-stock">In Stock (${prod.stock} Available)</span>`;
             }
 
+            const galleryImages = prod.gallery && prod.gallery.length > 0 ? prod.gallery : [prod.image_url];
+            let thumbnailsHtml = "";
+            if (galleryImages.length > 1) {
+                thumbnailsHtml = `
+                <div class="detail-thumbnails" style="display: flex; gap: 10px; margin-top: 15px; overflow-x: auto; padding-bottom: 5px;">
+                    ${galleryImages.map((img, idx) => `
+                        <img src="${img}" class="detail-thumb ${idx === 0 ? 'active' : ''}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid ${idx === 0 ? 'var(--accent-copper)' : 'transparent'}; transition: var(--transition-fast);" onclick="shop.setMainImage(this, '${img}')">
+                    `).join('')}
+                </div>`;
+            }
+
             layout.innerHTML = `
-                <div class="detail-image-box">
-                    <img src="${prod.image_url}" alt="${prod.name}" onerror="this.src='https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?q=80&w=600&auto=format&fit=crop'">
+                <div class="detail-image-box" style="display: flex; flex-direction: column;">
+                    <img id="detail-main-image" src="${galleryImages[0]}" alt="${prod.name}" style="flex-grow: 1; object-fit: cover; border-radius: var(--border-radius); transition: opacity 0.3s ease;" onerror="this.src='https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?q=80&w=600&auto=format&fit=crop'">
+                    ${thumbnailsHtml}
                 </div>
                 <div class="detail-info-box">
                     <h2>${prod.name}</h2>
@@ -360,7 +375,23 @@ const shop = {
             this.renderReviewForm(productId);
         } catch (err) {
             app.showToast("Failed to load product specifications.", "error");
+    },
+
+    setMainImage(thumbEl, imageUrl) {
+        const mainImg = document.getElementById('detail-main-image');
+        if (mainImg) {
+            mainImg.style.opacity = 0.5;
+            setTimeout(() => {
+                mainImg.src = imageUrl;
+                mainImg.style.opacity = 1;
+            }, 150);
         }
+        
+        // Update thumbnail borders
+        document.querySelectorAll('.detail-thumb').forEach(el => {
+            el.style.borderColor = 'transparent';
+        });
+        thumbEl.style.borderColor = 'var(--accent-copper)';
     },
 
     selectSize(element, sizeValue) {
