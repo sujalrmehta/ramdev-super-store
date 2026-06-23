@@ -298,7 +298,10 @@ async function serveStaticFile(pathname, res) {
     let safePath = pathname === '/' ? 'index.html' : pathname;
     let filePath = path.join(PUBLIC_DIR, safePath);
 
+    console.log(`[Static Request] pathname: ${pathname} -> filePath: ${filePath}`);
+
     if (!filePath.startsWith(PUBLIC_DIR)) {
+        console.warn(`[Static Access Denied] filePath: ${filePath} does not start with PUBLIC_DIR: ${PUBLIC_DIR}`);
         res.writeHead(403, { 'Content-Type': 'text/plain' });
         res.end('Access Denied');
         return;
@@ -329,11 +332,13 @@ async function serveStaticFile(pathname, res) {
         res.writeHead(200, { 'Content-Type': contentType });
         res.end(content);
     } catch (err) {
+        console.error(`[Static File Error] filePath: ${filePath} error: ${err.message}`);
         try {
             const indexHtml = await fs.readFile(path.join(PUBLIC_DIR, 'index.html'));
             res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
             res.end(indexHtml);
         } catch (subErr) {
+            console.error(`[Static Fallback Error] error: ${subErr.message}`);
             res.writeHead(404, { 'Content-Type': 'text/plain' });
             res.end('404 File Not Found');
         }
